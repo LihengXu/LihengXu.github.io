@@ -20,9 +20,25 @@
   <meta name="author" content="John Doe">
   <meta name="keywords" content="">
   
-  <title>Archives - Hexo</title>
+  <title>Hexo</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
 
 
 
@@ -50,7 +66,7 @@
 
 
 <body>
-  <header style="height: 60vh;">
+  <header style="height: 70vh;">
     <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand"
@@ -149,9 +165,46 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="Archive">
+            <span class="h2" id="subtitle" title="">
               
             </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-03-07 18:03" pubdate>
+        March 7, 2021 pm
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      250 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      3
+       分钟
+    </span>
+  
+
+  
+  
+</div>
 
             
           </div>
@@ -164,46 +217,94 @@
 
   <main>
     
-      <div class="container nopadding-x-md">
-        <div class="py-5" id="board"
-          >
-          
-          <div class="container">
-            <div class="row">
-              <div class="col-12 col-md-10 m-auto">
-                
-
-<div class="list-group">
-  <p class="h4">2 posts in total.</p>
-  <hr>
-  
-  
-    
       
-      <p class="h5">2021</p>
-    
-    <a href="/2021/03/07/PicGo/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title"></span>
-      <time style="float: right;">03-07</time>
-    </a>
-  
-    
-    <a href="/2021/03/07/hexo%E6%90%AD%E5%BB%BA/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title"></span>
-      <time style="float: right;">03-07</time>
-    </a>
-  
-</div>
 
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none"></h1>
+            
+            <div class="markdown-body">
+              <h1 id="PicGo图床"><a href="#PicGo图床" class="headerlink" title="PicGo图床"></a>PicGo图床</h1><h2 id="1-下载PicGo"><a href="#1-下载PicGo" class="headerlink" title="1. 下载PicGo"></a>1. 下载PicGo</h2><p><a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/PicGo">https://github.com/Molunerfinn/PicGo</a></p>
+<h2 id="2-安装PivcGo"><a href="#2-安装PivcGo" class="headerlink" title="2. 安装PivcGo"></a>2. 安装PivcGo</h2><p>直接运行.exe</p>
+<h2 id="3-新建一个github仓库"><a href="#3-新建一个github仓库" class="headerlink" title="3. 新建一个github仓库"></a>3. 新建一个github仓库</h2><p>mycdn</p>
+<h2 id="4-生成token"><a href="#4-生成token" class="headerlink" title="4.生成token"></a>4.生成token</h2><p>[进入github] -&gt; [点击头像] -&gt; [settings] -&gt; [Developers settings] -&gt; [Personal access token]</p>
+<blockquote>
+<p> 必须勾选repo</p>
+</blockquote>
+<p>生成后必须复制token，只显示一次</p>
+<blockquote>
+<p>0cb447c7cb66f97f8dd645d1b30f88b3bda94198</p>
+</blockquote>
+<h2 id="5-配置PicGo"><a href="#5-配置PicGo" class="headerlink" title="5. 配置PicGo"></a>5. 配置PicGo</h2><p>打开PicGo左栏依次选择[图床设置] -&gt; [github图床]</p>
+<p>格式：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs awk">仓库名： 你的用户名/仓库名<br>分支： main<br>Token： <span class="hljs-number">0</span>cb447c7cb66f97f8dd645d1b30f88b3bda94198<br>存储路径： img/  <span class="hljs-comment"># 表示上传到你的仓库的img目录下</span><br>自定义域名格式： https:<span class="hljs-regexp">//</span>cdn.jsdelivr.net<span class="hljs-regexp">/gh/</span>LihengXu/mycdn<br></code></pre></td></tr></table></figure>
 
+<p>因为github的服务器在国外，所以用来当图床的时候，国内的速度非常感人，但是我们可以使用<code>jsdelivr</code>提供的CDN服务，速度非常的快，基本不大的图片可以秒开。</p>
+<p>所以上述<strong>自定义域名</strong>实际上是使用的<code>jsdelivr</code>的CDN服务。</p>
+<h2 id="6-上传图片"><a href="#6-上传图片" class="headerlink" title="6. 上传图片"></a>6. 上传图片</h2><p>点击上传区，选择github图床</p>
+<p>示例</p>
+<p>![我的头像](<a target="_blank" rel="noopener" href="https://cdn.jsdelivr.net/gh/LihengXu/mycdn/img/my">https://cdn.jsdelivr.net/gh/LihengXu/mycdn/img/my</a> fig.png)</p>
 
-
-
-              </div>
             </div>
-          </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/03/07/hexo%E6%90%AD%E5%BB%BA/">
+                        <span class="hidden-mobile"></span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
         </div>
       </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
     
 
     
@@ -283,9 +384,15 @@
 
 
 
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
 
 
 
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
 
 
 
