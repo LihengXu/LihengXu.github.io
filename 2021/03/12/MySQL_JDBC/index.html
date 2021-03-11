@@ -304,27 +304,22 @@
 <p>参数url：指定连接的路径</p>
 <ol>
 <li>语法：jdbc:mysql://ip地址(域名):端口号/数据库名称</li>
-</ol>
-</li>
-</ul>
-</li>
-</ul>
-<ol start="2">
-<li>例子：jdbc:mysql://localhost:3306/db3<ol start="3">
+<li>例子：jdbc:mysql://localhost:3306/db3</li>
 <li>细节：如果连接的是本机mysql服务器，并且mysql服务默认端口是3306，则url可以简写为：jdbc:mysql:///数据库名称</li>
 </ol>
- user：用户名 password：密码</li>
-</ol>
+<p>user：用户名<br>password：密码</p>
+</li>
+</ul>
+</li>
+</ul>
 </li>
 </ul>
 <h4 id="2-3-2-Connection：数据库连接对象"><a href="#2-3-2-Connection：数据库连接对象" class="headerlink" title="2.3.2 Connection：数据库连接对象"></a>2.3.2 Connection：数据库连接对象</h4><ul>
 <li><p>功能</p>
 <ul>
 <li>获取执行sql 的对象</li>
-<li>Statement createStatement()<ul>
+<li>Statement createStatement()</li>
 <li>PreparedStatement prepareStatement(String sql) </li>
-</ul>
-</li>
 </ul>
 </li>
 <li><p>管理事务：</p>
