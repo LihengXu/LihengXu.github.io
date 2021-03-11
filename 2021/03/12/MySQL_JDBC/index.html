@@ -197,7 +197,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      72
+      71
        分钟
     </span>
   
@@ -341,10 +341,7 @@
 <li>boolean execute(String sql) ：可以执行任意的sql 了解</li>
 <li>int executeUpdate(String sql) ：执行DML（insert、update、delete）语句、DDL(create，alter、drop)语句</li>
 <li>ResultSet executeQuery(String sql)  ：执行DQL（select)语句</li>
-<li><ul>
 <li>PreparedStatement prepareStatement(String sql) </li>
-</ul>
-</li>
 </ul>
 </li>
 <li><p>代码: 对account表完成增删改：</p>
@@ -435,19 +432,24 @@
 </li>
 </ul>
 <h2 id="3-JDBCUtils-抽取JDBC工具类"><a href="#3-JDBCUtils-抽取JDBC工具类" class="headerlink" title="3. JDBCUtils: 抽取JDBC工具类"></a>3. JDBCUtils: 抽取JDBC工具类</h2><ul>
-<li>目的：简化书写</li>
-<li>分析：<ol>
-<li>注册驱动也抽取</li>
-<li>抽取一个方法获取连接对象</li>
-</ol>
+<li><p>目的：简化书写</p>
+</li>
+<li><p>分析：</p>
+<ol>
+<li><p>注册驱动也抽取</p>
+</li>
+<li><p>抽取一个方法获取连接对象</p>
 <ul>
 <li><p>需求：不想传递参数（麻烦），还得保证工具类的通用性。</p>
 </li>
 <li><p>解决：配置文件</p>
-<p>  jdbc.properties<br>  url=<br>  user=<br>  password=</p>
+<p> jdbc.properties<br> url=<br> user=<br> password=</p>
 </li>
-<li><p>抽取一个方法释放资源</p>
+</ul>
 </li>
+</ol>
+<ul>
+<li>抽取一个方法释放资源</li>
 </ul>
 </li>
 </ul>
@@ -616,15 +618,14 @@
 </li>
 <li><p>步骤：</p>
 <ol>
-<li>导入jar包</li>
-<li>创建JdbcTemplate对象。依赖于数据源DataSource</li>
-</ol>
+<li><p>导入jar包</p>
+</li>
+<li><p>创建JdbcTemplate对象。依赖于数据源DataSource</p>
 <ul>
 <li>JdbcTemplate template = new JdbcTemplate(ds);</li>
 </ul>
-<ol start="3">
-<li>调用JdbcTemplate的方法来完成CRUD的操作</li>
-</ol>
+</li>
+<li><p>调用JdbcTemplate的方法来完成CRUD的操作</p>
 <ul>
 <li><p>update():执行DML语句。增、删、改语句</p>
 </li>
@@ -635,16 +636,21 @@
 <p>注意：将每一条记录封装为一个Map集合，再将Map集合装载到List集合中</p>
 </li>
 <li><p>query():查询结果，将结果封装为JavaBean对象</p>
-<p>query的参数：RowMapper</p>
-<ol>
-<li>一般我们使用BeanPropertyRowMapper实现类。可以完成数据到JavaBean的自动封装</li>
-<li>new BeanPropertyRowMapper&lt;类型&gt;(类型.class)</li>
-</ol>
 </li>
+<li><p>query的参数：RowMapper</p>
+</li>
+</ul>
+</li>
+<li><p>一般我们使用BeanPropertyRowMapper实现类。可以完成数据到JavaBean的自动封装</p>
+</li>
+<li><p>new BeanPropertyRowMapper&lt;类型&gt;(类型.class)</p>
+<ul>
 <li><p>queryForObject：查询结果，将结果封装为对象</p>
 <p>一般用于聚合函数的查询</p>
 </li>
 </ul>
+</li>
+</ol>
 </li>
 </ul>
 <ul>
@@ -653,7 +659,7 @@
 
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> cn.itcast.jdbctemplate;<br><br><span class="hljs-keyword">import</span> cn.itcast.domain.Emp;<br><span class="hljs-keyword">import</span> cn.itcast.utils.JDBCUtils;<br><span class="hljs-keyword">import</span> org.junit.Test;<br><span class="hljs-keyword">import</span> org.springframework.jdbc.core.BeanPropertyRowMapper;<br><span class="hljs-keyword">import</span> org.springframework.jdbc.core.JdbcTemplate;<br><span class="hljs-keyword">import</span> org.springframework.jdbc.core.RowMapper;<br><br><span class="hljs-keyword">import</span> java.sql.Date;<br><span class="hljs-keyword">import</span> java.sql.ResultSet;<br><span class="hljs-keyword">import</span> java.sql.SQLException;<br><span class="hljs-keyword">import</span> java.util.List;<br><span class="hljs-keyword">import</span> java.util.Map;<br><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">JdbcTemplateDemo2</span> </span>&#123;<br><br>    <span class="hljs-comment">//Junit单元测试，可以让方法独立执行</span><br>    <span class="hljs-comment">//1. 获取JDBCTemplate对象</span><br>    <span class="hljs-keyword">private</span> JdbcTemplate template = <span class="hljs-keyword">new</span> JdbcTemplate(JDBCUtils.getDataSource());<br>    <br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 1. 修改1号数据的 salary 为 10000</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-meta">@Test</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">test1</span><span class="hljs-params">()</span></span>&#123;<br><br>        <span class="hljs-comment">//2. 定义sql</span><br>        String sql = <span class="hljs-string">&quot;update emp set salary = 10000 where id = 1001&quot;</span>;<br>        <span class="hljs-comment">//3. 执行sql</span><br>        <span class="hljs-keyword">int</span> count = template.update(sql);<br>        System.out.println(count);<br>    &#125;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 2. 添加一条记录</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-meta">@Test</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">test2</span><span class="hljs-params">()</span></span>&#123;<br>        String sql = <span class="hljs-string">&quot;insert into emp(id,ename,dept_id) values(?,?,?)&quot;</span>;<br>        <span class="hljs-keyword">int</span> count = template.update(sql, <span class="hljs-number">1015</span>, <span class="hljs-string">&quot;郭靖&quot;</span>, <span class="hljs-number">10</span>);<br>        System.out.println(count);<br><br>    &#125;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 3.删除刚才添加的记录</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-meta">@Test</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">test3</span><span class="hljs-params">()</span></span>&#123;<br>        String sql = <span class="hljs-string">&quot;delete from emp where id = ?&quot;</span>;<br>        <span class="hljs-keyword">int</span> count = template.update(sql, <span class="hljs-number">1015</span>);<br>        System.out.println(count);<br>    &#125;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 4.查询id为1001的记录，将其封装为Map集合</span><br><span class="hljs-comment">     * 注意：这个方法查询的结果集长度只能是1</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-meta">@Test</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">test4</span><span class="hljs-params">()</span></span>&#123;<br>        String sql = <span class="hljs-string">&quot;select * from emp where id = ? or id = ?&quot;</span>;<br>        Map&lt;String, Object&gt; map = template.queryForMap(sql, <span class="hljs-number">1001</span>,<span class="hljs-number">1002</span>);<br>        System.out.println(map);<br>        <span class="hljs-comment">//&#123;id=1001, ename=孙悟空, job_id=4, mgr=1004, joindate=2000-12-17, salary=10000.00, bonus=null, dept_id=20&#125;</span><br><br>    &#125;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 5. 查询所有记录，将其封装为List</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-meta">@Test</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">test5</span><span class="hljs-params">()</span></span>&#123;<br>        String sql = <span class="hljs-string">&quot;select * from emp&quot;</span>;<br>        List&lt;Map&lt;String, Object&gt;&gt; list = template.queryForList(sql);<br><br>        <span class="hljs-keyword">for</span> (Map&lt;String, Object&gt; stringObjectMap : list) &#123;<br>            System.out.println(stringObjectMap);<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 6. 查询所有记录，将其封装为Emp对象的List集合</span><br><span class="hljs-comment">     */</span><br><br>    <span class="hljs-meta">@Test</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">test6</span><span class="hljs-params">()</span></span>&#123;<br>        String sql = <span class="hljs-string">&quot;select * from emp&quot;</span>;<br>        List&lt;Emp&gt; list = template.query(sql, <span class="hljs-keyword">new</span> RowMapper&lt;Emp&gt;() &#123;<br><br>            <span class="hljs-meta">@Override</span><br>            <span class="hljs-function"><span class="hljs-keyword">public</span> Emp <span class="hljs-title">mapRow</span><span class="hljs-params">(ResultSet rs, <span class="hljs-keyword">int</span> i)</span> <span class="hljs-keyword">throws</span> SQLException </span>&#123;<br>                Emp emp = <span class="hljs-keyword">new</span> Emp();<br>                <span class="hljs-keyword">int</span> id = rs.getInt(<span class="hljs-string">&quot;id&quot;</span>);<br>                String ename = rs.getString(<span class="hljs-string">&quot;ename&quot;</span>);<br>                <span class="hljs-keyword">int</span> job_id = rs.getInt(<span class="hljs-string">&quot;job_id&quot;</span>);<br>                <span class="hljs-keyword">int</span> mgr = rs.getInt(<span class="hljs-string">&quot;mgr&quot;</span>);<br>                Date joindate = rs.getDate(<span class="hljs-string">&quot;joindate&quot;</span>);<br>                <span class="hljs-keyword">double</span> salary = rs.getDouble(<span class="hljs-string">&quot;salary&quot;</span>);<br>                <span class="hljs-keyword">double</span> bonus = rs.getDouble(<span class="hljs-string">&quot;bonus&quot;</span>);<br>                <span class="hljs-keyword">int</span> dept_id = rs.getInt(<span class="hljs-string">&quot;dept_id&quot;</span>);<br><br>                emp.setId(id);<br>                emp.setEname(ename);<br>                emp.setJob_id(job_id);<br>                emp.setMgr(mgr);<br>                emp.setJoindate(joindate);<br>                emp.setSalary(salary);<br>                emp.setBonus(bonus);<br>                emp.setDept_id(dept_id);<br><br>                <span class="hljs-keyword">return</span> emp;<br>            &#125;<br>        &#125;);<br><br>        <span class="hljs-keyword">for</span> (Emp emp : list) &#123;<br>            System.out.println(emp);<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 6. 查询所有记录，将其封装为Emp对象的List集合</span><br><span class="hljs-comment">     */</span><br><br>    <span class="hljs-meta">@Test</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">test6_2</span><span class="hljs-params">()</span></span>&#123;<br>        String sql = <span class="hljs-string">&quot;select * from emp&quot;</span>;<br>        List&lt;Emp&gt; list = template.query(sql, <span class="hljs-keyword">new</span> BeanPropertyRowMapper&lt;Emp&gt;(Emp.class));<br>        <span class="hljs-keyword">for</span> (Emp emp : list) &#123;<br>            System.out.println(emp);<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 7. 查询总记录数</span><br><span class="hljs-comment">     */</span><br><br>    <span class="hljs-meta">@Test</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">test7</span><span class="hljs-params">()</span></span>&#123;<br>        String sql = <span class="hljs-string">&quot;select count(id) from emp&quot;</span>;<br>        Long total = template.queryForObject(sql, Long.class);<br>        System.out.println(total);<br>    &#125;<br><br>&#125;<br></code></pre></td></tr></table></figure></li>
 <li><p>表与JavaBean的关系</p>
-<p>![](<a target="_blank" rel="noopener" href="https://cdn.jsdelivr.net/gh/LihengXu/mycdn/img/JDBC_8">https://cdn.jsdelivr.net/gh/LihengXu/mycdn/img/JDBC_8</a> (2).png)</p>
+<p><img src="https://cdn.jsdelivr.net/gh/LihengXu/mycdn/img/JDBC_8(2).png" srcset="/img/loading.gif"></p>
 </li>
 </ul>
 <h2 id="9-DAO层"><a href="#9-DAO层" class="headerlink" title="9.  DAO层"></a>9.  DAO层</h2><ul>
