@@ -197,12 +197,20 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      71
+      89
        分钟
     </span>
   
 
   
+  
+    
+      <!-- LeanCloud 统计文章PV -->
+      <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="leancloud-page-views"></span> 次
+      </span>
+    
   
 </div>
 
@@ -523,10 +531,12 @@
 <p> 当系统初始化好后，容器被创建，容器中会申请一些连接对象，当用户来访问数据库时，从容器中获取连接对象，用户访问完之后，会将连接对象归还给容器。</p>
 </li>
 <li><p>好处：</p>
-</li>
+<ul>
 <li><p>节约资源</p>
 </li>
 <li><p>用户访问高效</p>
+</li>
+</ul>
 </li>
 <li><p>实现：</p>
 </li>
@@ -547,9 +557,11 @@
 </li>
 </ul>
 <ol start="4">
-<li><p>C3P0：数据库连接池技术</p>
+<li>C3P0：数据库连接池技术</li>
+</ol>
 <ul>
-<li><p>步骤：</p>
+<li>步骤：</li>
+</ul>
 <ol>
 <li><p>导入jar包 (两个) c3p0-0.9.5.2.jar mchange-commons-java-0.2.12.jar ，</p>
 <ul>
@@ -567,13 +579,13 @@
 <li><p>获取连接： getConnection</p>
 </li>
 </ol>
-</li>
-<li><p>代码：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * c3p0的演示</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">C3P0Demo</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> SQLException </span>&#123;<br>        <span class="hljs-comment">//1.创建数据库连接池对象</span><br>        DataSource ds  = <span class="hljs-keyword">new</span> ComboPooledDataSource();<br>        <span class="hljs-comment">//2. 获取连接对象</span><br>        Connection conn = ds.getConnection();<br>        <span class="hljs-comment">//3. 打印</span><br>        System.out.println(conn);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure></li>
+<ul>
+<li>代码：</li>
 </ul>
-</li>
-<li><p>Druid：数据库连接池实现技术，由阿里巴巴提供的</p>
-<ol>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * c3p0的演示</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">C3P0Demo</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> SQLException </span>&#123;<br>        <span class="hljs-comment">//1.创建数据库连接池对象</span><br>        DataSource ds  = <span class="hljs-keyword">new</span> ComboPooledDataSource();<br>        <span class="hljs-comment">//2. 获取连接对象</span><br>        Connection conn = ds.getConnection();<br>        <span class="hljs-comment">//3. 打印</span><br>        System.out.println(conn);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ol start="5">
+<li>Druid：数据库连接池实现技术，由阿里巴巴提供的<ol>
 <li>步骤：<ol>
 <li>导入jar包 druid-1.0.9.jar</li>
 <li>定义配置文件：<ul>
