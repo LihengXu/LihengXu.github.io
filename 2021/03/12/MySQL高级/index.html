@@ -238,8 +238,8 @@
             <h1 style="display: none">MySQL高级</h1>
             
             <div class="markdown-body">
-              <h1 id="MySQL高级"><a href="#MySQL高级" class="headerlink" title="MySQL高级"></a>MySQL高级</h1><p>基于<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV12b411K7Zu?p=179">MySQL高级</a>的学习笔记<sup id="fnref:1" class="footnote-ref"><a href="#fn:1" rel="footnote"><span class="hint--top hint--rounded" aria-label="http://blog.codinglabs.org/articles/theory-of-mysql-index.html
-">[1]</span></a></sup></p>
+              <h1 id="MySQL高级"><a href="#MySQL高级" class="headerlink" title="MySQL高级"></a>MySQL高级</h1><p>基于<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV12b411K7Zu?p=179">MySQL高级</a>的学习笔记<sup id="fnref:2" class="footnote-ref"><a href="#fn:2" rel="footnote"><span class="hint--top hint--rounded" aria-label="https://www.bilibili.com/video/BV12b411K7Zu?p=179
+">[2]</span></a></sup></p>
 <blockquote>
 <p>内容说明：</p>
 <p>MySQL 是目前最流行的关系型数据库管理系统，在 WEB 应用方面 MySQL 也是目前最好的 RDBMS 应用软件之一。随着淘宝去IOE(去除IBM小型机、Oracle数据库及EMC存储设备)化的推进，MySQL 数据库在当前的互联网应用中变得越来越重要。</p>
@@ -439,10 +439,10 @@
 
 
 
-<h4 id="2-3-5-mysql索引结构-lt-span-class-”hint–top-hint–rounded”-aria-label-”https-www-bilibili-com-video-BV12b411K7Zu-p-179"><a href="#2-3-5-mysql索引结构-lt-span-class-”hint–top-hint–rounded”-aria-label-”https-www-bilibili-com-video-BV12b411K7Zu-p-179" class="headerlink" title="2.3.5 mysql索引结构&lt;span class=”hint–top hint–rounded” aria-label=”https://www.bilibili.com/video/BV12b411K7Zu?p=179"></a>2.3.5 mysql索引结构<sup id="fnref:2" class="footnote-ref"><a href="#fn:2" rel="footnote">&lt;span class=”hint–top hint–rounded” aria-label=”https://www.bilibili.com/video/BV12b411K7Zu?p=179</h4><p>“&gt;[2]</span></a></sup>⭐</p>
-<p><img src="https://cdn.jsdelivr.net/gh/LihengXu/mycdn/img/MySQL%E9%AB%98%E7%BA%A7_11_%E7%B4%A2%E5%BC%95%E7%BB%93%E6%9E%84.png" srcset="/img/loading.gif"></p>
+<h4 id="2-3-5-mysql索引结构⭐"><a href="#2-3-5-mysql索引结构⭐" class="headerlink" title="2.3.5 mysql索引结构⭐"></a>2.3.5 mysql索引结构⭐</h4><p><img src="https://cdn.jsdelivr.net/gh/LihengXu/mycdn/img/MySQL%E9%AB%98%E7%BA%A7_11_%E7%B4%A2%E5%BC%95%E7%BB%93%E6%9E%84.png" srcset="/img/loading.gif"></p>
 <ul>
-<li><p>B-Tree</p>
+<li><p>B-Tree<sup id="fnref:1" class="footnote-ref"><a href="#fn:1" rel="footnote"><span class="hint--top hint--rounded" aria-label="http://blog.codinglabs.org/articles/theory-of-mysql-index.html
+">[1]</span></a></sup></p>
 <p>为了描述B-Tree，首先定义一条数据记录为一个二元组[key, data]，key为记录的键值，对于不同数据记录，key是互不相同的；data为数据记录除key外的数据。那么B-Tree是满足下列条件的数据结构：</p>
 <ul>
 <li>d为大于1的一个正整数，称为B-Tree的度。</li>
@@ -465,7 +465,8 @@
 <p>关于B-Tree有一系列有趣的性质，例如一个度为d的B-Tree，设其索引N个key，则其树高h的上限为logd((N+1)/2)logd((N+1)/2)，检索一个key，其查找节点个数的渐进复杂度为O(logdN)O(logdN)。从这点可以看出，B-Tree是一个非常有效率的索引数据结构。</p>
 <p>另外，由于插入删除新的数据记录会破坏B-Tree的性质，因此在插入删除时，需要对树进行一个分裂、合并、转移等操作以保持B-Tree性质，本文不打算完整讨论B-Tree这些内容，因为已经有许多资料详细说明了B-Tree的数学性质及插入删除算法，有兴趣的朋友可以在本文末的参考文献一栏找到相应的资料进行阅读。</p>
 </li>
-<li><p>B+Tree</p>
+<li><p>B+Tree<sup id="fnref:1" class="footnote-ref"><a href="#fn:1" rel="footnote"><span class="hint--top hint--rounded" aria-label="http://blog.codinglabs.org/articles/theory-of-mysql-index.html
+">[1]</span></a></sup></p>
 <p>B-Tree有许多变种，其中最常见的是B+Tree，例如MySQL就普遍使用B+Tree实现其索引结构。</p>
 <p>与B-Tree相比，B+Tree有以下不同点：</p>
 <ul>
@@ -478,12 +479,14 @@
 <p>由于并不是所有节点都具有相同的域，因此B+Tree中叶节点和内节点一般大小不同。这点与B-Tree不同，虽然B-Tree中不同节点存放的key和指针可能数量不一致，但是每个节点的域和上限是一致的，所以在实现中B-Tree往往对每个节点申请同等大小的空间。</p>
 <p>一般来说，B+Tree比B-Tree更适合实现外存储索引结构，具体原因与外存储器原理及计算机存取原理有关。</p>
 </li>
-<li><p>带有顺序访问指针的B+Tree</p>
+<li><p>带有顺序访问指针的B+Tree<sup id="fnref:1" class="footnote-ref"><a href="#fn:1" rel="footnote"><span class="hint--top hint--rounded" aria-label="http://blog.codinglabs.org/articles/theory-of-mysql-index.html
+">[1]</span></a></sup></p>
 <p>一般在数据库系统或文件系统中使用的B+Tree结构都在经典B+Tree的基础上进行了优化，增加了顺序访问指针</p>
 <p><img src="https://cdn.jsdelivr.net/gh/LihengXu/mycdn/img/MySQL%E9%AB%98%E7%BA%A7_13_B+Tree%E6%A3%80%E7%B4%A2%E5%8E%9F%E7%90%862.png" srcset="/img/loading.gif"></p>
 <p>在B+Tree的每个叶子节点增加一个指向相邻叶子节点的指针，就形成了带有顺序访问指针的B+Tree。做这个优化的目的是为了提高区间访问的性能，例如图4中如果要查询key为从18到49的所有数据记录，当找到18后，只需顺着节点和指针顺序遍历就可以一次性访问到所有数据节点，极大提高了区间查询效率。</p>
 </li>
-<li><p>为什么使用B-Tree（B+Tree）</p>
+<li><p>为什么使用B-Tree（B+Tree）<sup id="fnref:1" class="footnote-ref"><a href="#fn:1" rel="footnote"><span class="hint--top hint--rounded" aria-label="http://blog.codinglabs.org/articles/theory-of-mysql-index.html
+">[1]</span></a></sup></p>
 <p>红黑树等数据结构也可以用来实现索引，但是文件系统及数据库系统普遍采用B-/+Tree作为索引结构，结合计算机组成原理相关知识讨论B-/+Tree作为索引的理论基础</p>
 <p>考虑到<strong>主存存取原理</strong>，<strong>磁盘存取原理</strong>，<strong>局部性原理与磁盘预读</strong>详细见<sup id="fnref:1" class="footnote-ref"><a href="#fn:1" rel="footnote"><span class="hint--top hint--rounded" aria-label="http://blog.codinglabs.org/articles/theory-of-mysql-index.html
 ">[1]</span></a></sup></p>
@@ -505,12 +508,14 @@
 </li>
 </ul>
 <ul>
-<li><p>B+Tree适合外存索引的原因：</p>
+<li><p>B+Tree适合外存索引的原因<sup id="fnref:1" class="footnote-ref"><a href="#fn:1" rel="footnote"><span class="hint--top hint--rounded" aria-label="http://blog.codinglabs.org/articles/theory-of-mysql-index.html
+">[1]</span></a></sup>：</p>
 <p><img src="https://cdn.jsdelivr.net/gh/LihengXu/mycdn/img/MySQL%E9%AB%98%E7%BA%A7_13_B+Tree%E6%A3%80%E7%B4%A2%E5%8E%9F%E7%90%864.png" srcset="/img/loading.gif"></p>
 </li>
 </ul>
 <ul>
-<li><p>MyISAM索引实现</p>
+<li><p>MyISAM索引实现<sup id="fnref:1" class="footnote-ref"><a href="#fn:1" rel="footnote"><span class="hint--top hint--rounded" aria-label="http://blog.codinglabs.org/articles/theory-of-mysql-index.html
+">[1]</span></a></sup></p>
 <ul>
 <li>MyISAM引擎使用B+Tree作为索引结构，叶节点的data域存放的是数据记录的地址。下图是MyISAM索引的原理图：</li>
 </ul>
@@ -526,7 +531,8 @@
 </li>
 </ul>
 <ul>
-<li><p>InnoDB索引实现</p>
+<li><p>InnoDB索引实现<sup id="fnref:1" class="footnote-ref"><a href="#fn:1" rel="footnote"><span class="hint--top hint--rounded" aria-label="http://blog.codinglabs.org/articles/theory-of-mysql-index.html
+">[1]</span></a></sup></p>
 <ul>
 <li><p>虽然InnoDB也使用B+Tree作为索引结构，但具体实现方式却与MyISAM截然不同。</p>
 </li>
