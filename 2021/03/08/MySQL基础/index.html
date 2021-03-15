@@ -747,6 +747,7 @@
 <thead>
 <tr>
 <th></th>
+<th>读数据一致性</th>
 <th>脏读</th>
 <th>不可重复读</th>
 <th>幻读</th>
@@ -754,30 +755,34 @@
 </thead>
 <tbody><tr>
 <td>read uncommitted: 读未提交</td>
+<td>最低级别，只能保证不读取物理上损坏的数据</td>
 <td>×</td>
 <td>×</td>
 <td>×</td>
 </tr>
 <tr>
 <td>read committed: 读已提交</td>
+<td>语句级</td>
 <td>√</td>
 <td>×</td>
 <td>×</td>
 </tr>
 <tr>
 <td>repeatable read: 可重复读</td>
+<td>事务级</td>
 <td>√</td>
 <td>√</td>
 <td>×</td>
 </tr>
 <tr>
 <td>serializable: 串行化 (每次读都需获得表级共享锁，读写相互都会阻塞,性能低下)</td>
+<td>最高级别，事务级</td>
 <td>√</td>
 <td>√</td>
 <td>√</td>
 </tr>
 </tbody></table>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs mysql"># mysql中默认 第三个隔离级别 <br>repeatable read<br># oracle中默认第二个隔离级别 <br>read committed<br># 查看隔离级别<br>select @@tx_isolation;<br># 设置隔离级别<br>set session|global transaction isolation level 隔离级别;<br></code></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs mysql"># mysql中默认 第三个隔离级别 <br>repeatable read<br># oracle中默认第二个隔离级别 <br>read committed<br># 查看隔离级别<br>select @@tx_isolation;<br>show variables like &#39;tx_isolation&#39;;<br># 设置隔离级别<br>set session|global transaction isolation level 隔离级别;<br></code></pre></td></tr></table></figure>
 
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs mysql">#1.演示事务的使用步骤<br># 开启事务<br>SET autocommit&#x3D;0;<br>START TRANSACTION;<br># 编写一组事务的语句<br>UPDATE account SET balance &#x3D; 1000 WHERE username&#x3D;&#39;张无忌&#39;;<br>UPDATE account SET balance &#x3D; 1000 WHERE username&#x3D;&#39;赵敏&#39;;<br># 结束事务<br>ROLLBACK; # commit;<br>SELECT * FROM account;<br><br>#2.演示事务对于delete和truncate的处理的区别<br>SET autocommit&#x3D;0;<br>START TRANSACTION;<br>DELETE FROM account;<br>ROLLBACK;<br><br>#3.演示savepoint 的使用<br>SET autocommit&#x3D;0;<br>START TRANSACTION;<br>DELETE FROM account WHERE id&#x3D;25;<br>SAVEPOINT a;#设置保存点<br>DELETE FROM account WHERE id&#x3D;28;<br>ROLLBACK TO a;#回滚到保存点<br>SELECT * FROM account;<br></code></pre></td></tr></table></figure>
 
