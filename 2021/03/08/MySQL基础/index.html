@@ -187,7 +187,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      12.6k 字
+      12.7k 字
     </span>
   
 
@@ -197,7 +197,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      210
+      211
        分钟
     </span>
   
@@ -734,6 +734,7 @@
 <li><strong>脏读</strong>：一个事务读取了其他事务还没有提交的数据，读到的是其他事务“更新”的数据</li>
 <li><strong>不可重复读</strong>：一个事务多次读取，结果不一样</li>
 <li><strong>幻读</strong>：一个事务读取了其他事务还没有提交的数据，只是读到的是其他事务“插入”的数据</li>
+<li><strong>更新丢失</strong>：当两个或者多个事务选择同一行，然后基于最初的选定的值更新该行时，由于每一个事务都不知道其他事务的存在，就会发生更新问题。最后的更新覆盖了其他事务所做的更新。</li>
 </ul>
 </li>
 <li><p>如何解决并发问题</p>
