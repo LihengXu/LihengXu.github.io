@@ -194,6 +194,146 @@
     
     
       <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2021/03/15/MySQL%E5%B9%B6%E5%8F%91%E6%97%B6%E7%BB%8F%E5%85%B8%E5%B8%B8%E8%A7%81%E7%9A%84%E6%AD%BB%E9%94%81%E5%8E%9F%E5%9B%A0%E5%8F%8A%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/" target="_self">
+          <img src="/img/blog/MySQL.png" srcset="/img/loading.gif" alt="MySQL并发时经典的死锁及解决方法">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/03/15/MySQL%E5%B9%B6%E5%8F%91%E6%97%B6%E7%BB%8F%E5%85%B8%E5%B8%B8%E8%A7%81%E7%9A%84%E6%AD%BB%E9%94%81%E5%8E%9F%E5%9B%A0%E5%8F%8A%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/">MySQL并发时经典的死锁及解决方法</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/03/15/MySQL%E5%B9%B6%E5%8F%91%E6%97%B6%E7%BB%8F%E5%85%B8%E5%B8%B8%E8%A7%81%E7%9A%84%E6%AD%BB%E9%94%81%E5%8E%9F%E5%9B%A0%E5%8F%8A%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/">
+          
+          
+            
+          
+          MySQL并发时经典的死锁及解决方法1. MySQL都有锁分类
+MySQL有三种锁的级别：页级、表级、行级。
+
+
+表级锁：开销小，加锁快；不会出现死锁；锁定粒度大，发生锁冲突的概率最高,并发度最低。
+
+行级锁：开销大，加锁慢；会出现死锁；锁定粒度最小，发生锁冲突的概率最低,并发度也最高。
+
+页面锁：开销和加锁时间界于表锁和行锁之间；会出现死锁；锁定粒度界于表锁和行锁之间，并发度一般
+
+
+
+算法
+
+
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-03-15 17:44" pubdate>
+              2021-03-15
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/Database/">Database</a>
+            
+              <a href="/categories/Database/MySQL/">MySQL</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/MySQL/">MySQL</a>
+            
+              <a href="/tags/SQL/">SQL</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2021/03/15/IDEA%E6%96%AD%E7%82%B9%E8%B0%83%E8%AF%95/" target="_self">
+          <img src="/img/blog/IDEA.jpg" srcset="/img/loading.gif" alt="IDEA 断点调试技巧">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/03/15/IDEA%E6%96%AD%E7%82%B9%E8%B0%83%E8%AF%95/">IDEA 断点调试技巧</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/03/15/IDEA%E6%96%AD%E7%82%B9%E8%B0%83%E8%AF%95/">
+          
+          
+            
+          
+          IDEA 断点调试技巧简单记录一下IDEA最常用到的debug方式[1]
+1. 行断点普通在左侧打的断点就是行断点
+
+2. 详细断点 | 源断点按住shift键加上鼠标点击代码左侧出现下图
+
+
+如果我们只勾选Enabled，再点击右下角done，则调试效果如下
+
+
+我们可以看到该断点并没有挂起，只是打出断点所触发的位置（具体的类及所在方法）
+
+
+勾选Suspend（挂起）和All，再点击右done
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-03-15 13:51" pubdate>
+              2021-03-15
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/IDE/">IDE</a>
+            
+              <a href="/categories/IDE/IDEA/">IDEA</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/IDEA/">IDEA</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2021/03/12/MySQL%E9%AB%98%E7%BA%A7/" target="_self">
           <img src="/img/blog/MySQL.png" srcset="/img/loading.gif" alt="MySQL高级">
         </a>
@@ -301,13 +441,13 @@ JDBC是java访问数据库的基石，JDO, Hibernate等只是更好的封装了J
           <div class="post-meta mr-3">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/Java/">Java</a>
-            
-              <a href="/categories/Java/JDBC/">JDBC</a>
-            
               <a href="/categories/Database/">Database</a>
             
+              <a href="/categories/Java/">Java</a>
+            
               <a href="/categories/Database/MySQL/">MySQL</a>
+            
+              <a href="/categories/Java/JDBC/">JDBC</a>
             
           </div>
         
@@ -315,11 +455,11 @@ JDBC是java访问数据库的基石，JDO, Hibernate等只是更好的封装了J
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
+              <a href="/tags/MySQL/">MySQL</a>
+            
               <a href="/tags/JDBC/">JDBC</a>
             
               <a href="/tags/Java/">Java</a>
-            
-              <a href="/tags/MySQL/">MySQL</a>
             
           </div>
         
