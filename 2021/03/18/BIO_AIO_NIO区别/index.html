@@ -287,7 +287,8 @@
 </li>
 <li><p>讨论Java中对应的编程模型</p>
 </li>
-<li><p>对比BIO/NIO的区别</p>
+<li><p>对比BIO/NIO的区别<sup id="fnref:3" class="footnote-ref"><a href="#fn:3" rel="footnote"><span class="hint--top hint--rounded" aria-label="https://zhuanlan.zhihu.com/p/83597838
+">[3]</span></a></sup></p>
 </li>
 </ul>
 <h2 id="1-Linux下的五种I-O模型"><a href="#1-Linux下的五种I-O模型" class="headerlink" title="1.  Linux下的五种I/O模型"></a>1.  Linux下的五种I/O模型</h2><p>Stevens在文章中一共比较了五种IO Model：</p>
@@ -476,7 +477,8 @@
 <li>AIO方式使用于连接数目多且连接比较长（重操作）的架构，比如相册服务器，充分调用OS参与并发操作，编程比较复杂，JDK7开始支持。</li>
 </ul>
 <h2 id="5-Java-NIO的3个核心组件"><a href="#5-Java-NIO的3个核心组件" class="headerlink" title="5. Java NIO的3个核心组件"></a>5. Java NIO的3个核心组件</h2><blockquote>
-<p>NIO重点</p>
+<p>NIO重点:</p>
+<p>Channel（通道），Buffer（缓冲区），Selector（选择器）三个类之间的关系</p>
 </blockquote>
 <p><img src="https://cdn.jsdelivr.net/gh/LihengXu/mycdn/img/7_NIO%E4%B8%89%E5%A4%A7%E7%BB%84%E4%BB%B6%E7%9A%84%E4%BD%9C%E7%94%A8.png" srcset="/img/loading.gif"></p>
 <blockquote>
@@ -539,10 +541,7 @@
 <p>Jetty、Mina、Netty、Dubbo、ZooKeeper等都是基于NIO方式实现</p>
 <h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><section class="footnotes"><div class="footnote-list"><ol><li><span id="fn:1" class="footnote-text"><span>UNIX® Network Programming Volume 1, Third Edition: The Sockets Networking，Richard Stevens，6.2节 I/O Models
 <a href="#fnref:1" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:2" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://blog.csdn.net/historyasamirror/article/details/5778378">https://blog.csdn.net/historyasamirror/article/details/5778378</a>
-<a href="#fnref:2" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:3" class="footnote-text"><span><blockquote>
-Channel（通道），Buffer（缓冲区），Selector（选择器）三个类之间的关系
-</blockquote>
-<a href="#fnref:3" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:3" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/83597838">https://zhuanlan.zhihu.com/p/83597838</a>
+<a href="#fnref:2" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:3" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/83597838">https://zhuanlan.zhihu.com/p/83597838</a>
 <a href="#fnref:3" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:4" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/112810033">https://zhuanlan.zhihu.com/p/112810033</a>
 <a href="#fnref:4" rev="footnote" class="footnote-backref"> ↩</a></span></span></li></ol></div></section>
             </div>
