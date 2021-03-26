@@ -267,7 +267,7 @@
 <li>HBase</li>
 <li>MongoDB</li>
 </ul>
-<p><img src="C:\Users\LihengXu\AppData\Roaming\Typora\typora-user-images\image-20210325204028250.png" srcset="/img/loading.gif" alt="image-20210325204028250"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/LihengXu/mycdn/img/Redis_2_20210325.png" srcset="/img/loading.gif"></p>
 <h3 id="1-2-Redis简介"><a href="#1-2-Redis简介" class="headerlink" title="1.2 Redis简介"></a>1.2 Redis简介</h3><blockquote>
 <p>概念：Redis（REmote DIctionary Server）是用C语言开发的一个开源的高性能键值对（key-value）数据库。</p>
 </blockquote>
@@ -343,10 +343,10 @@
 <h4 id="2-1-4-String类型数据操作的注意事项"><a href="#2-1-4-String类型数据操作的注意事项" class="headerlink" title="2.1.4 String类型数据操作的注意事项"></a>2.1.4 String类型数据操作的注意事项</h4><p><img src="https://cdn.jsdelivr.net/gh/LihengXu/mycdn/img/Redis_3_20210325.png" srcset="/img/loading.gif"></p>
 <ul>
 <li><p>key的设置约定</p>
-<p><img src="C:\Users\LihengXu\AppData\Roaming\Typora\typora-user-images\image-20210325212759471.png" srcset="/img/loading.gif" alt="image-20210325212759471"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/LihengXu/mycdn/img/Redis_4_20210326.png" srcset="/img/loading.gif"></p>
 </li>
 </ul>
-<h3 id="2-2-Hash"><a href="#2-2-Hash" class="headerlink" title="2.2 Hash"></a>2.2 Hash</h3><p><img src="C:\Users\LihengXu\AppData\Roaming\Typora\typora-user-images\image-20210325213005632.png" srcset="/img/loading.gif" alt="image-20210325213005632"></p>
+<h3 id="2-2-Hash"><a href="#2-2-Hash" class="headerlink" title="2.2 Hash"></a>2.2 Hash</h3><p><img src="https://cdn.jsdelivr.net/gh/LihengXu/mycdn/img/Redis_5_20210326.png" srcset="/img/loading.gif"></p>
 <ul>
 <li>新的存储需求：对一系列存储的数据进行编组，方便管理，典型应用存储对象信息</li>
 <li>需要的存储结构：一个存储空间保存多个键值对数据</li>
@@ -373,7 +373,7 @@
 <li>list类型：保存多个数据，底层使用双向链表存储结构实现</li>
 <li><strong>元素有序，且可重</strong></li>
 </ul>
-<p><img src="C:\Users\LihengXu\AppData\Roaming\Typora\typora-user-images\image-20210325223049808.png" srcset="/img/loading.gif" alt="image-20210325223049808"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/LihengXu/mycdn/img/Redis_8_20210326.png" srcset="/img/loading.gif"></p>
 <h4 id="2-3-1-基本操作"><a href="#2-3-1-基本操作" class="headerlink" title="2.3.1 基本操作"></a>2.3.1 基本操作</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> 添加修改数据,lpush为从左边添加，rpush为从右边添加</span><br>lpush key value1 value2 value3...<br>rpush key value1 value2 value3...<br><br><span class="hljs-meta">#</span><span class="bash"> 查看数据, 从左边开始向右查看. 如果不知道list有多少个元素，end的值可以为-1,代表倒数第一个元素</span><br><span class="hljs-meta">#</span><span class="bash"> lpush先进的元素放在最后,rpush先进的元素放在最前面</span><br>lrange key start end<br><span class="hljs-meta">#</span><span class="bash"> 取出对应索引的元素</span><br>lindex key index<br><span class="hljs-meta">#</span><span class="bash"> 得到长度</span><br>llen key<br><br><span class="hljs-meta">#</span><span class="bash"> 获取并移除元素（从list左边或者右边移除）</span><br>lpop key<br>rpop key<br></code></pre></td></tr></table></figure>
 
 
