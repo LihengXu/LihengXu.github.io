@@ -4,6 +4,37 @@
   
   
   <entry>
+    <title>常见攻击HTTP协议的五大方式</title>
+    <link href="/2021/03/28/HTTP%E5%B8%B8%E8%A7%81%E7%9A%84%E6%94%BB%E5%87%BB%E6%89%8B%E6%AE%B5/"/>
+    <url>/2021/03/28/HTTP%E5%B8%B8%E8%A7%81%E7%9A%84%E6%94%BB%E5%87%BB%E6%89%8B%E6%AE%B5/</url>
+    
+    <content type="html"><![CDATA[<h1 id="常见攻击HTTP协议的五大方式"><a href="#常见攻击HTTP协议的五大方式" class="headerlink" title="常见攻击HTTP协议的五大方式"></a>常见攻击HTTP协议的五大方式</h1><p><strong>http协议</strong>从诞生至今伴随着互联网走过了相当长的岁月，就在当下，http协议依旧是搭建网站的主流协议。http协议的存在有其特定的历史意义，但是面对如今日益严峻的安全问题，http协议的不安全性也越发暴露，下面列举常见的攻击http协议的五大方式。</p><h2 id="一-跨站脚本攻击-XSS"><a href="#一-跨站脚本攻击-XSS" class="headerlink" title="一.跨站脚本攻击(XSS)"></a>一.跨站脚本攻击(XSS)</h2><p>跨站脚本攻击(XSS，Cross-site scripting)是最常见和基本的攻击WEB网站的方法。攻击者在网页上发布包含攻击性代码的数据。当浏览者看到此网页时，特定的脚本就会以浏览者用户的身份和权限来执行。通过XSS可以比较容易地修改用户数据、窃取用户信息，以及造成其它类型的攻击，例如CSRF攻击。</p><h2 id="二-跨站请求伪造攻击-CSRF"><a href="#二-跨站请求伪造攻击-CSRF" class="headerlink" title="二. 跨站请求伪造攻击(CSRF)"></a>二. 跨站请求伪造攻击(CSRF)</h2><p>跨站请求伪造(CSRF，Cross-site request forgery)是另一种常见的攻击。攻击者通过各种方法伪造一个请求，模仿用户提交表单的行为，从而达到修改用户的数据，或者执行特定任务的目的。为了假冒用户的身份，CSRF攻击常常和XSS攻击配合起来做，但也可以通过其它手段，例如诱使用户点击一个包含攻击的链接。</p><h2 id="三-Http-Heads攻击"><a href="#三-Http-Heads攻击" class="headerlink" title="三.Http Heads攻击"></a>三.Http Heads攻击</h2><p>凡是用浏览器查看任何WEB网站，无论你的WEB网站采用何种技术和框架，都用到了HTTP协议.HTTP协议在Response header和content之间，有一个空行，即两组CRLF(0x0D 0A)字符。这个空行标志着headers的结束和content的开始。“聪明”的攻击者可以利用这一点。只要攻击者有办法将任意字符“注入”到headers中，这种攻击就可以发生。</p><p>以登陆为例:有这样一个url:</p><p><a href="http://localhost/login?page=http://localhost/index">http://localhost/login?page=http%3A%2F%2Flocalhost%2Findex</a></p><p>当登录成功以后，需要重定向回page参数所指定的页面。下面是重定向发生时的response headers.</p><figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs http"><span class="hljs-meta">HTTP/1.1</span> <span class="hljs-number">302</span> Moved Temporarily<br><br><span class="hljs-attribute">Date</span><span class="hljs-punctuation">: </span>Tue, 17 Aug 2010 20:00:29 GMT<br><br><span class="hljs-attribute">Server</span><span class="hljs-punctuation">: </span>Apache mod_fcgid/2.3.5 mod_auth_passthrough/2.1 mod_bwlimited/1.4 FrontPage/5.0.2.2635<br><br><span class="hljs-attribute">Location</span><span class="hljs-punctuation">: </span>http://localhost/index<br></code></pre></td></tr></table></figure><p>假如把URL修改一下，变成这个样子：</p><p><a href="http://localhost/login?page=http://localhost/checkout%0D%0A%0D%0A%3Cscript%3Ealert(%27hello%27)%3C/script%3E">http://localhost/login?page=http%3A%2F%2Flocalhost%2Fcheckout%0D%0A%0D%0A%3Cscript%3Ealert%28%27hello%27%29%3C%2Fscript%3E</a></p><p>那么重定向发生时的reponse会变成下面的样子：</p><figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs http"><span class="hljs-meta">HTTP/1.1</span> <span class="hljs-number">302</span> Moved Temporarily<br><br><span class="hljs-attribute">Date</span><span class="hljs-punctuation">: </span>Tue, 17 Aug 2010 20:00:29 GMT<br><br><span class="hljs-attribute">Server</span><span class="hljs-punctuation">: </span>Apache mod_fcgid/2.3.5 mod_auth_passthrough/2.1 mod_bwlimited/1.4 FrontPage/5.0.2.2635<br><br><span class="hljs-attribute">Location</span><span class="hljs-punctuation">: </span>http://localhost/checkout<br></code></pre></td></tr></table></figure><p>这个页面可能会意外地执行隐藏在URL中的javascript。类似的情况不仅发生在重定向(Location header)上，也有可能发生在其它headers中，如Set-Cookie header。这种攻击如果成功的话，可以做很多事，例如：执行脚本、设置额外的cookie(Set-Cookie: evil=value)等。</p><h2 id="四-Cookie攻击"><a href="#四-Cookie攻击" class="headerlink" title="四.Cookie攻击"></a>四.Cookie攻击</h2><p>通过Java Script非常容易访问到当前网站的cookie。你可以打开任何网站，然后在浏览器地址栏中输入：javascript:alert(doucment.cookie),立刻就可以看到当前站点的cookie(如果有的话)。攻击者可以利用这个特性来取得你的关键信息。例如，和XSS攻击相配合，攻击者在你的浏览器上执行特定的Java Script脚本，取得你的cookie。假设这个网站仅依赖cookie来验证用户身份，那么攻击者就可以假冒你的身份来做一些事情。</p><h2 id="五-重定向攻击"><a href="#五-重定向攻击" class="headerlink" title="五.重定向攻击"></a>五.重定向攻击</h2><p>最常用的攻击手段就是“钓鱼”。钓鱼攻击者，通常会发送给受害者一个合法链接，当链接被点击时，用户被导向一个似是而非的非法网站，从而达到骗取用户信任、窃取用户资料的目的。</p><p>总结</p><p>互联网的技术发展日新月异，http在黑客层出不穷的攻击手段面前毫无招架之力，近年爆出的多起数据泄露事故无不在向我们敲打着警钟，希望开发者能对此引起重视，避免数据泄露事件的发生。</p><h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><section class="footnotes"><div class="footnote-list"><ol><li><span id="fn:1" class="footnote-text"><span>转载自：<a href="https://freessl.wosign.com/1336.html">https://freessl.wosign.com/1336.html</a><a href="#fnref:1" rev="footnote" class="footnote-backref"> ↩</a></span></span></li></ol></div></section>]]></content>
+    
+    
+    <categories>
+      
+      <category>CS</category>
+      
+      <category>Network</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>CS</tag>
+      
+      <tag>Network</tag>
+      
+      <tag>HTTP</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>SSL的加密过程</title>
     <link href="/2021/03/28/SSL%E7%9A%84%E5%8A%A0%E5%AF%86%E8%BF%87%E7%A8%8B/"/>
     <url>/2021/03/28/SSL%E7%9A%84%E5%8A%A0%E5%AF%86%E8%BF%87%E7%A8%8B/</url>
@@ -167,9 +198,9 @@
       
       <tag>Network</tag>
       
-      <tag>HTTPS</tag>
-      
       <tag>HTTP</tag>
+      
+      <tag>HTTPS</tag>
       
       <tag>TCP</tag>
       
@@ -200,9 +231,9 @@
     
     <tags>
       
-      <tag>Java</tag>
-      
       <tag>Network</tag>
+      
+      <tag>Java</tag>
       
       <tag>IO</tag>
       
