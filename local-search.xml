@@ -4,6 +4,33 @@
   
   
   <entry>
+    <title>MySQL_Join优化</title>
+    <link href="/2021/04/01/MySQL_Join%E4%BC%98%E5%8C%96/"/>
+    <url>/2021/04/01/MySQL_Join%E4%BC%98%E5%8C%96/</url>
+    
+    <content type="html"><![CDATA[<h1 id="MySQL-Join优化"><a href="#MySQL-Join优化" class="headerlink" title="MySQL_Join优化"></a>MySQL_Join优化</h1><h2 id="1-Simple-Nested-Loop-Join"><a href="#1-Simple-Nested-Loop-Join" class="headerlink" title="1. Simple Nested-Loop Join"></a>1. Simple Nested-Loop Join</h2><p><img src="https://cdn.jsdelivr.net/gh/LihengXu/mycdn/img/MySQL_join_1_20210401.png"></p><ul><li><p>r为驱动表，s为匹配表，可以看到从r中分别去出每一个记录区匹配s表的列，然后合并数据，对s表进行r表的行数次访问，对数据库开箱比较大</p></li><li><p>建议小表驱动大表</p></li></ul><h2 id="2-Index-Nested-Loop-Join"><a href="#2-Index-Nested-Loop-Join" class="headerlink" title="2. Index Nested-Loop Join"></a>2. Index Nested-Loop Join</h2><p><img src="https://cdn.jsdelivr.net/gh/LihengXu/mycdn/img/MySQL_join_2_20210401.png"></p><ul><li><p>这个要求非驱动表（s）上有索引，可以通过索引来减少比较，加速查询。</p></li><li><p>在查询时，驱动表（r）会根据关联字段的索引进行查找，当在索引上找到符合的值，再回表进行查询，也就是只有当匹配到索引以后才会进行回表查询。</p></li><li><p>如果非驱动表（s）的关联键是主键的话，性能会非常高，如果不是主键的话，要进行多次回表查询，先关联索引，然后根据二级索引的主键ID进行回表操作，性能上比索引是主键要慢</p></li></ul><h2 id="3-Block-Nested-Loop-Join"><a href="#3-Block-Nested-Loop-Join" class="headerlink" title="3. Block Nested-Loop Join"></a>3. Block Nested-Loop Join</h2><p><img src="https://cdn.jsdelivr.net/gh/LihengXu/mycdn/img/MySQL_join_3_20210401.png"></p><p>如果有索引，会选取第二种方式进行join，但如果join列没有索引，就会采用Block Nested-Loop Join。可以看到中间有个join buffer缓冲区，是将驱动表的所有join相关的列都先缓存到join buffer中，然后批量于匹配表进行比配，将第一种多次比较合并为一次，降低了非驱动表（s）的访问频率。默认情况下join_buffer_size=256K，再查找的时候MySQL会将所有的需要的列缓存到join_buffer当中，包括select的列，而不是仅仅只缓存关联列。在一个有N个JOIN关联的SQL当中会在执行时候分配N-1个join_buffer。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>Database</category>
+      
+      <category>MySQL</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>MySQL</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>MySQL的MVCC机制和锁</title>
     <link href="/2021/04/01/MySQL_MVCC%E6%9C%BA%E5%88%B6%E5%92%8C%E9%94%81/"/>
     <url>/2021/04/01/MySQL_MVCC%E6%9C%BA%E5%88%B6%E5%92%8C%E9%94%81/</url>
@@ -452,9 +479,9 @@
       
       <category>Database</category>
       
-      <category>Java</category>
-      
       <category>MySQL</category>
+      
+      <category>Java</category>
       
       <category>JDBC</category>
       

@@ -20,9 +20,25 @@
   <meta name="author" content="John Doe">
   <meta name="keywords" content="">
   
-  <title>Categories - Database - LihengXu&#39;s Blog</title>
+  <title>MySQL_Join优化 - LihengXu&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
 
 
 
@@ -50,7 +66,7 @@
 
 
 <body>
-  <header style="height: 60vh;">
+  <header style="height: 70vh;">
     <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand"
@@ -161,9 +177,54 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="Category - Database">
+            <span class="h2" id="subtitle" title="MySQL_Join优化">
               
             </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-04-01 20:05" pubdate>
+        April 1, 2021 pm
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      415 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      5
+       分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- LeanCloud 统计文章PV -->
+      <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="leancloud-page-views"></span> 次
+      </span>
+    
+  
+</div>
 
             
           </div>
@@ -176,100 +237,142 @@
 
   <main>
     
-      <div class="container nopadding-x-md">
-        <div class="py-5" id="board"
-          >
-          
-          <div class="container">
-            <div class="row">
-              <div class="col-12 col-md-10 m-auto">
-                
-
-<div class="list-group">
-  <p class="h4">11 posts in total.</p>
-  <hr>
-  
-  
-    
       
-      <p class="h5">2021</p>
-    
-    <a href="/2021/04/01/MySQL_Join%E4%BC%98%E5%8C%96/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">MySQL_Join优化</span>
-      <time style="float: right;">04-01</time>
-    </a>
-  
-    
-    <a href="/2021/04/01/MySQL_MVCC%E6%9C%BA%E5%88%B6%E5%92%8C%E9%94%81/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">MySQL的MVCC机制和锁</span>
-      <time style="float: right;">04-01</time>
-    </a>
-  
-    
-    <a href="/2021/04/01/Redis%E7%BC%93%E5%AD%98%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8F%8C%E5%86%99%E4%B8%8D%E4%B8%80%E8%87%B4/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">Redis缓存数据库双写不一致</span>
-      <time style="float: right;">04-01</time>
-    </a>
-  
-    
-    <a href="/2021/03/31/Redis%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%E7%9A%84%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">Redis分布式锁的深入理解</span>
-      <time style="float: right;">03-31</time>
-    </a>
-  
-    
-    <a href="/2021/03/28/Redis%E9%9B%86%E7%BE%A4%E4%B8%8E%E4%BC%81%E4%B8%9A%E7%BA%A7%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">Redis集群与企业级解决方案</span>
-      <time style="float: right;">03-28</time>
-    </a>
-  
-    
-    <a href="/2021/03/27/Redis%E9%AB%98%E7%BA%A7/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">Redis高级</span>
-      <time style="float: right;">03-27</time>
-    </a>
-  
-    
-    <a href="/2021/03/26/Redis%E5%9F%BA%E7%A1%80/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">Redis基础</span>
-      <time style="float: right;">03-26</time>
-    </a>
-  
-    
-    <a href="/2021/03/15/MySQL%E5%B9%B6%E5%8F%91%E6%97%B6%E7%BB%8F%E5%85%B8%E5%B8%B8%E8%A7%81%E7%9A%84%E6%AD%BB%E9%94%81%E5%8E%9F%E5%9B%A0%E5%8F%8A%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">MySQL并发时经典的死锁及解决方法</span>
-      <time style="float: right;">03-15</time>
-    </a>
-  
-    
-    <a href="/2021/03/12/MySQL%E9%AB%98%E7%BA%A7/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">MySQL高级</span>
-      <time style="float: right;">03-12</time>
-    </a>
-  
-    
-    <a href="/2021/03/12/MySQL_JDBC/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">JDBC</span>
-      <time style="float: right;">03-12</time>
-    </a>
-  
-</div>
 
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">MySQL_Join优化</h1>
+            
+            <div class="markdown-body">
+              <h1 id="MySQL-Join优化"><a href="#MySQL-Join优化" class="headerlink" title="MySQL_Join优化"></a>MySQL_Join优化</h1><h2 id="1-Simple-Nested-Loop-Join"><a href="#1-Simple-Nested-Loop-Join" class="headerlink" title="1. Simple Nested-Loop Join"></a>1. Simple Nested-Loop Join</h2><p><img src="https://cdn.jsdelivr.net/gh/LihengXu/mycdn/img/MySQL_join_1_20210401.png" srcset="/img/loading.gif"></p>
+<ul>
+<li><p>r为驱动表，s为匹配表，可以看到从r中分别去出每一个记录区匹配s表的列，然后合并数据，对s表进行r表的行数次访问，对数据库开箱比较大</p>
+</li>
+<li><p>建议小表驱动大表</p>
+</li>
+</ul>
+<h2 id="2-Index-Nested-Loop-Join"><a href="#2-Index-Nested-Loop-Join" class="headerlink" title="2. Index Nested-Loop Join"></a>2. Index Nested-Loop Join</h2><p><img src="https://cdn.jsdelivr.net/gh/LihengXu/mycdn/img/MySQL_join_2_20210401.png" srcset="/img/loading.gif"></p>
+<ul>
+<li><p>这个要求非驱动表（s）上有索引，可以通过索引来减少比较，加速查询。</p>
+</li>
+<li><p>在查询时，驱动表（r）会根据关联字段的索引进行查找，当在索引上找到符合的值，再回表进行查询，也就是只有当匹配到索引以后才会进行回表查询。</p>
+</li>
+<li><p>如果非驱动表（s）的关联键是主键的话，性能会非常高，如果不是主键的话，要进行多次回表查询，先关联索引，然后根据二级索引的主键ID进行回表操作，性能上比索引是主键要慢</p>
+</li>
+</ul>
+<h2 id="3-Block-Nested-Loop-Join"><a href="#3-Block-Nested-Loop-Join" class="headerlink" title="3. Block Nested-Loop Join"></a>3. Block Nested-Loop Join</h2><p><img src="https://cdn.jsdelivr.net/gh/LihengXu/mycdn/img/MySQL_join_3_20210401.png" srcset="/img/loading.gif"></p>
+<p>如果有索引，会选取第二种方式进行join，但如果join列没有索引，就会采用Block Nested-Loop Join。可以看到中间有个join buffer缓冲区，是将驱动表的所有join相关的列都先缓存到join buffer中，然后批量于匹配表进行比配，将第一种多次比较合并为一次，降低了非驱动表（s）的访问频率。默认情况下join_buffer_size=256K，再查找的时候MySQL会将所有的需要的列缓存到join_buffer当中，包括select的列，而不是仅仅只缓存关联列。在一个有N个JOIN关联的SQL当中会在执行时候分配N-1个join_buffer。</p>
 
-  <nav aria-label="navigation">
-    <span class="pagination" id="pagination">
-      <span class="page-number current">1</span><a class="page-number" href="/categories/Database/page/2/#board">2</a><a class="extend next" rel="next" href="/categories/Database/page/2/#board"><i class="iconfont icon-arrowright"></i></a>
-    </span>
-  </nav>
-
-
-
-
-              </div>
             </div>
-          </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Database/">Database</a>
+                    
+                      <a class="hover-with-bg" href="/categories/Database/MySQL/">MySQL</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/MySQL/">MySQL</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/04/01/MySQL_MVCC%E6%9C%BA%E5%88%B6%E5%92%8C%E9%94%81/">
+                        <span class="hidden-mobile">MySQL的MVCC机制和锁</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments">
+                
+                  
+                
+                
+  <div id="vcomments"></div>
+  <script type="text/javascript">
+    Fluid.utils.waitElementVisible('vcomments', function() {
+      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', function () {
+        new Valine({
+          el: "#vcomments",
+          app_id: "zTPGNcnnYmT218Av5iBL8nGh-gzGzoHsz",
+          app_key: "Nk68rUDzBxauuv3b7ro1QdtD",
+          placeholder: "吐槽",
+          path: window.location.pathname,
+          avatar: "retro",
+          meta: ["nick","mail","link"],
+          pageSize: "10",
+          lang: "zh-CN",
+          highlight: false,
+          recordIP: false,
+          serverURLs: "https://ztpgncnn.lc-cn-n1-shared.com",
+        });
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the
+    <a target="_blank" href="https://valine.js.org" rel="nofollow noopener noopener">comments powered by Valine.</a>
+  </noscript>
+
+
+              </article>
+            
+          </article>
         </div>
       </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
     
 
     
@@ -374,9 +477,15 @@
 
 
 
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
 
 
 
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
 
 
 
