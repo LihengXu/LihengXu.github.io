@@ -20,7 +20,7 @@
   <meta name="author" content="John Doe">
   <meta name="keywords" content="">
   
-  <title>Redis缓存数据库双写不一致 - LihengXu&#39;s Blog</title>
+  <title>MySQL的MVCC机制和锁 - LihengXu&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
 
@@ -177,7 +177,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="Redis缓存数据库双写不一致">
+            <span class="h2" id="subtitle" title="MySQL的MVCC机制和锁">
               
             </span>
 
@@ -187,7 +187,7 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-04-01 15:55" pubdate>
+      <time datetime="2021-04-01 17:24" pubdate>
         April 1, 2021 pm
       </time>
     </span>
@@ -199,7 +199,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      681 字
+      711 字
     </span>
   
 
@@ -247,54 +247,60 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Redis缓存数据库双写不一致</h1>
+            <h1 style="display: none">MySQL的MVCC机制和锁</h1>
             
             <div class="markdown-body">
-              <h1 id="Redis缓存数据库双写不一致"><a href="#Redis缓存数据库双写不一致" class="headerlink" title="Redis缓存数据库双写不一致"></a>Redis缓存数据库双写不一致</h1><p>学习笔记</p>
-<h2 id="1-示例"><a href="#1-示例" class="headerlink" title="1. 示例"></a>1. 示例</h2><h3 id="1-1-示例一"><a href="#1-1-示例一" class="headerlink" title="1.1 示例一"></a>1.1 示例一</h3><p><img src="https://cdn.jsdelivr.net/gh/LihengXu/mycdn/img/Redis_9_20210331.png" srcset="/img/loading.gif"></p>
-<p>线程一：写数据库stock=10，之后发生卡顿或者延迟了很久才更新缓存</p>
-<p>线程二：在线程一之后写数据库stock=6，然后更新了缓存stock=6</p>
-<p>线程一：再线程二更新缓存结束后，卡顿或者延迟结束，更新缓存stock=10</p>
-<p>结果：导致数据库stock=6，而缓存stock=10</p>
-<p>解决方法：更新数据库之后删除缓存。</p>
-<p>但是依然有问题，见示例二</p>
-<h3 id="1-2-示例二"><a href="#1-2-示例二" class="headerlink" title="1.2 示例二"></a>1.2 示例二</h3><p><img src="https://cdn.jsdelivr.net/gh/LihengXu/mycdn/img/Redis_10_20210331.png" srcset="/img/loading.gif"></p>
-<p>线程一：更新数据库stock=10，然后删除缓存</p>
-<p>线程三：在线程一更新后查缓存，发现缓存为空；于是查数据库，发现为stock=10，此时发成卡顿或者延迟；</p>
-<p>线程二：在线程三查数据库，更新缓存之前，重写了数据库stock=6，并删除缓存</p>
-<p>线程三：卡顿或者延迟结束，更新缓存stock=10</p>
-<p>结果：导致缓存stock = 10，数据库stock=6</p>
-<p>我们可以发现更新数据库后删除缓存并没有解决双写不一致问题。</p>
-<p>一些解决方案：</p>
+              <h1 id="MVCC机制和锁"><a href="#MVCC机制和锁" class="headerlink" title="MVCC机制和锁"></a>MVCC机制和锁</h1><h2 id="1-当前读和快照读"><a href="#1-当前读和快照读" class="headerlink" title="1. 当前读和快照读"></a>1. 当前读和快照读</h2><p>MySQL的InnoDB存储引擎默认事务隔离级别是RR(可重复读), 是通过 “行排他锁+MVCC” 一起实现的, 不仅可以保证可重复读, 还可以<strong>部分</strong>防止幻读, 而非完全防止。为什么是部分防止幻读, 而不是完全防止?</p>
 <ul>
-<li><p><strong>延迟双删</strong>（可靠性不高，且导致吞吐量下降，不推荐）</p>
-<p>更新数据库，立刻删除缓存，然后sleep一段时间后再删一次缓存</p>
+<li>效果: 在如果事务B在事务A执行中, insert了一条数据并提交, 事务A再次查询, 虽然读取的是undo中的旧版本数据(防止了部分幻读), 但是事务A中执行update或者delete都是可以成功的!!（可以看<a href="###3.2 幻读">后面的解释：3.2 幻读</a>加以理解）</li>
+<li>因为在innodb中的操作可以分为<code>当前读(current read)</code>和<code>快照读(snapshot read)</code></li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/LihengXu/mycdn/img/MySQL_2_20210401.png" srcset="/img/loading.gif"></p>
+<p>innodb在RR级别中</p>
+<ul>
+<li><p>当前读通过record lock和gap lock实现的</p>
 </li>
-<li><p><strong>内存队列</strong>（并发问题串行化，实现复杂，性能不高，不推荐）</p>
-<p>把同一个商品的CRUD操作都放在一个队列里面串行化执行</p>
-</li>
-<li><p><strong>分布式锁</strong>（并发问题串行化，实现简单，性能不高，<strong>推荐</strong>）</p>
-<p>具体见我的上一篇<a target="_blank" rel="noopener" href="http://lihengxu.cn/2021/03/31/Redis%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%E7%9A%84%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3/">blog</a></p>
+<li><p>快照读通过MVCC和undolog实现的</p>
 </li>
 </ul>
-<h2 id="2-较好的解决方案"><a href="#2-较好的解决方案" class="headerlink" title="2. 较好的解决方案"></a>2. 较好的解决方案</h2><h3 id="2-1-读写锁（读多写少场景）"><a href="#2-1-读写锁（读多写少场景）" class="headerlink" title="2.1 读写锁（读多写少场景）"></a>2.1 读写锁（读多写少场景）</h3><p>分布式锁实现简单，但性能有待优化，我们可以通过读写锁来进一步提高性能，读共享，写互斥（排他）</p>
-<ul>
-<li><p>查询方法<code>getStock()</code>使用读锁</p>
-<p><img src="https://cdn.jsdelivr.net/gh/LihengXu/mycdn/img/Redis_11_20210331.png" srcset="/img/loading.gif"></p>
+<p>innodb在快照读的情况下并没有真正的避免幻读, 但是在当前读的情况下避免了不可重复读和幻读</p>
+<h2 id="2-MVCC机制"><a href="#2-MVCC机制" class="headerlink" title="2. MVCC机制"></a>2. MVCC机制</h2><blockquote>
+<p>MVCC是多版本并发控制</p>
+</blockquote>
+<p>MVCC可以主要参考文章对比着看：<a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000012650596">https://segmentfault.com/a/1190000012650596</a></p>
+<h3 id="2-1-行数据的后面三个字段"><a href="#2-1-行数据的后面三个字段" class="headerlink" title="2.1 行数据的后面三个字段"></a>2.1 行数据的后面三个字段</h3><ul>
+<li><p>InnoDB存储引擎在数据库每行数据的后面添加了三个字段</p>
 </li>
-<li><p>更新方法<code>updateStock()</code>使用写锁</p>
-<p><img src="https://cdn.jsdelivr.net/gh/LihengXu/mycdn/img/Redis_12._20210331.png" srcset="/img/loading.gif"></p>
-</li>
-<li><p>这两个读改方法是互斥的</p>
-</li>
-<li><p>读写锁Redisson的底层实现</p>
+<li><p>innodb存储引擎每次再进行数据插入的时候，数据必须要跟某一个索引列绑定在一起，这个索引列有一个选择的顺序： 主键 &gt; 唯一键 &gt; 自动生成6字节的rowid</p>
 </li>
 </ul>
-<p><img src="https://cdn.jsdelivr.net/gh/LihengXu/mycdn/img/Redis_13._20210331.png" srcset="/img/loading.gif"></p>
-<h3 id="2-2-缓存设置超时清除（适用于缓存不追求绝对一致）"><a href="#2-2-缓存设置超时清除（适用于缓存不追求绝对一致）" class="headerlink" title="2.2 缓存设置超时清除（适用于缓存不追求绝对一致）"></a>2.2 缓存设置超时清除（适用于缓存不追求绝对一致）</h3><p>详情页面显示100，但是下单后发现已经（数据库库存为0）卖完了，其实并不影响业务逻辑，所以设置缓存失效时间就行了。</p>
-<p>该方法没有较好的解决双写不一致问题，但是简单，且性能较好。</p>
-<h3 id="2-3-分布式数据库（读多写多的场景）"><a href="#2-3-分布式数据库（读多写多的场景）" class="headerlink" title="2.3 分布式数据库（读多写多的场景）"></a>2.3 分布式数据库（读多写多的场景）</h3><p>如果写多的话，就已经不适合缓存了，所以直接就在数据库上操作了</p>
-<p>如果MySQL扛不住高并发请求可以通过分布式数据库来改善，如TiDB</p>
+<p><img src="https://cdn.jsdelivr.net/gh/LihengXu/mycdn/img/MySQL_1_20210401.png" srcset="/img/loading.gif"></p>
+<h3 id="2-2-undolog保证了原子性"><a href="#2-2-undolog保证了原子性" class="headerlink" title="2.2 undolog保证了原子性"></a>2.2 undolog保证了原子性</h3><p>事务中数据的历史版本保存在undolog，可以通过回滚指针实现事务回滚</p>
+<p>事务提交后可以清除无效的历史数据</p>
+<p><img src="https://cdn.jsdelivr.net/gh/LihengXu/mycdn/img/MySQL_3_20210401.png" srcset="/img/loading.gif"></p>
+<h3 id="2-3-Read-view"><a href="#2-3-Read-view" class="headerlink" title="2.3 Read view"></a>2.3 Read view</h3><p>当前存在多个历史版本数据的时候，会涉及到一个可见性算法，来计算当前事务读取的是哪一个版本的历史数据</p>
+<blockquote>
+<p>read view:</p>
+<p>当进行快照读的时候会生成一个事务id的列表，来保存不同的信息，通过这些星系来做可见性判断</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/LihengXu/mycdn/img/MySQL_4_20210401.png" srcset="/img/loading.gif"></p>
+<p>上面的id都是行数据后面三字段中的事务id</p>
+<p><img src="https://cdn.jsdelivr.net/gh/LihengXu/mycdn/img/MySQL_5_20210401.png" srcset="/img/loading.gif"></p>
+<p>MVCC中隔离级别RC和RR的区别：在于<strong>readview的生成时机</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/LihengXu/mycdn/img/MySQL_6_20210401.png" srcset="/img/loading.gif"></p>
+<h2 id="3-锁"><a href="#3-锁" class="headerlink" title="3. 锁"></a>3. 锁</h2><blockquote>
+<p>MySQL锁的分类</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/LihengXu/mycdn/img/MySQL_7_20210401.png" srcset="/img/loading.gif"></p>
+<h3 id="3-1-三种行锁的区别"><a href="#3-1-三种行锁的区别" class="headerlink" title="3.1 三种行锁的区别"></a>3.1 三种行锁的区别</h3><p><img src="https://cdn.jsdelivr.net/gh/LihengXu/mycdn/img/MySQL_8_20210401.png" srcset="/img/loading.gif"></p>
+<h3 id="3-2-幻读"><a href="#3-2-幻读" class="headerlink" title="3.2 幻读"></a>3.2 幻读</h3><p>如果全是快照读不会出现幻读（MVCC保证的）</p>
+<p>如果全是当前读也是不会出现幻读的（记录锁和间隙锁保证的）</p>
+<p>一个实例分析（出现幻读）：</p>
+<ul>
+<li>当前事务1先快照读（select）</li>
+<li>随后事务2在当前事务1执行过程中插入或者删除行数据并成功提交</li>
+<li>当前事务1又执行了<strong>当前读</strong>(如update)，发现突然突然增加或者减少了一行</li>
+</ul>
 
             </div>
             <hr>
@@ -306,7 +312,7 @@
                     
                       <a class="hover-with-bg" href="/categories/Database/">Database</a>
                     
-                      <a class="hover-with-bg" href="/categories/Database/Redis/">Redis</a>
+                      <a class="hover-with-bg" href="/categories/Database/MySQL/">MySQL</a>
                     
                   </div>
                 
@@ -314,7 +320,9 @@
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
-                      <a class="hover-with-bg" href="/tags/Redis/">Redis</a>
+                      <a class="hover-with-bg" href="/tags/MySQL/">MySQL</a>
+                    
+                      <a class="hover-with-bg" href="/tags/MVCC/">MVCC</a>
                     
                   </div>
                 
@@ -331,18 +339,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2021/04/01/MySQL_MVCC%E6%9C%BA%E5%88%B6%E5%92%8C%E9%94%81/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">MySQL的MVCC机制和锁</span>
-                        <span class="visible-mobile">Previous</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2021/03/31/Redis%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%E7%9A%84%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3/">
-                        <span class="hidden-mobile">Redis分布式锁的深入理解</span>
+                      <a href="/2021/04/01/Redis%E7%BC%93%E5%AD%98%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8F%8C%E5%86%99%E4%B8%8D%E4%B8%80%E8%87%B4/">
+                        <span class="hidden-mobile">Redis缓存数据库双写不一致</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
