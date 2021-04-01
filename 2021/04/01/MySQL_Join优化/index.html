@@ -252,7 +252,7 @@
             <div class="markdown-body">
               <h1 id="MySQL-Join优化"><a href="#MySQL-Join优化" class="headerlink" title="MySQL_Join优化"></a>MySQL_Join优化</h1><h2 id="1-Simple-Nested-Loop-Join"><a href="#1-Simple-Nested-Loop-Join" class="headerlink" title="1. Simple Nested-Loop Join"></a>1. Simple Nested-Loop Join</h2><p><img src="https://cdn.jsdelivr.net/gh/LihengXu/mycdn/img/MySQL_join_1_20210401.png" srcset="/img/loading.gif"></p>
 <ul>
-<li><p>r为驱动表，s为匹配表，可以看到从r中分别去出每一个记录区匹配s表的列，然后合并数据，对s表进行r表的行数次访问，对数据库开箱比较大</p>
+<li><p>r为驱动表，s为匹配表，可以看到从r中分别取出每一个记录区匹配s表的列，然后合并数据，对s表进行r表的行数次访问，对数据库开箱比较大</p>
 </li>
 <li><p>建议小表驱动大表</p>
 </li>
