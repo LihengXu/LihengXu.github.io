@@ -199,7 +199,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      711 字
+      720 字
     </span>
   
 
@@ -252,7 +252,7 @@
             <div class="markdown-body">
               <h1 id="MVCC机制和锁"><a href="#MVCC机制和锁" class="headerlink" title="MVCC机制和锁"></a>MVCC机制和锁</h1><h2 id="1-当前读和快照读"><a href="#1-当前读和快照读" class="headerlink" title="1. 当前读和快照读"></a>1. 当前读和快照读</h2><p>MySQL的InnoDB存储引擎默认事务隔离级别是RR(可重复读), 是通过 “行排他锁+MVCC” 一起实现的, 不仅可以保证可重复读, 还可以<strong>部分</strong>防止幻读, 而非完全防止。为什么是部分防止幻读, 而不是完全防止?</p>
 <ul>
-<li>效果: 在如果事务B在事务A执行中, insert了一条数据并提交, 事务A再次查询, 虽然读取的是undo中的旧版本数据(防止了部分幻读), 但是事务A中执行update或者delete都是可以成功的!!（可以看<a href="###3.2 幻读">后面的解释：3.2 幻读</a>加以理解）</li>
+<li>效果: 在如果事务B在事务A执行中, insert了一条数据并提交, 事务A再次查询, 虽然读取的是undo中的旧版本数据(防止了部分幻读), 但是事务A中执行update或者delete都是可以成功的!!（可以看<a href="demo">后面的解释：3.2 幻读</a>加以理解）</li>
 <li>因为在innodb中的操作可以分为<code>当前读(current read)</code>和<code>快照读(snapshot read)</code></li>
 </ul>
 <p><img src="https://cdn.jsdelivr.net/gh/LihengXu/mycdn/img/MySQL_2_20210401.png" srcset="/img/loading.gif"></p>
@@ -293,7 +293,8 @@
 </blockquote>
 <p><img src="https://cdn.jsdelivr.net/gh/LihengXu/mycdn/img/MySQL_7_20210401.png" srcset="/img/loading.gif"></p>
 <h3 id="3-1-三种行锁的区别"><a href="#3-1-三种行锁的区别" class="headerlink" title="3.1 三种行锁的区别"></a>3.1 三种行锁的区别</h3><p><img src="https://cdn.jsdelivr.net/gh/LihengXu/mycdn/img/MySQL_8_20210401.png" srcset="/img/loading.gif"></p>
-<h3 id="3-2-幻读"><a href="#3-2-幻读" class="headerlink" title="3.2 幻读"></a>3.2 幻读</h3><p>如果全是快照读不会出现幻读（MVCC保证的）</p>
+<h3 id="3-2-幻读"><a href="#3-2-幻读" class="headerlink" title="3.2 幻读"></a>3.2 幻读</h3><p><a id="demo">部分解决幻读的理解</a></p>
+<p>如果全是快照读不会出现幻读（MVCC保证的）</p>
 <p>如果全是当前读也是不会出现幻读的（记录锁和间隙锁保证的）</p>
 <p>一个实例分析（出现幻读）：</p>
 <ul>
