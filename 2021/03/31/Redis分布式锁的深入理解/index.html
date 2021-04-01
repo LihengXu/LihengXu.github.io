@@ -209,7 +209,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      37
+      36
        分钟
     </span>
   
@@ -250,7 +250,7 @@
             <h1 style="display: none">Redis分布式锁的深入理解</h1>
             
             <div class="markdown-body">
-              <h1 id="Redis分布式锁的深入理解"><a href="#Redis分布式锁的深入理解" class="headerlink" title="Redis分布式锁的深入理解"></a>Redis分布式锁的深入理解</h1><p>基于<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1bU4y1p7kX">诸葛老师的Redis视频</a>的学习笔记</p>
+              <h1 id="Redis分布式锁的深入理解"><a href="#Redis分布式锁的深入理解" class="headerlink" title="Redis分布式锁的深入理解"></a>Redis分布式锁的深入理解</h1><p>学习笔记</p>
 <h2 id="1-高并发下的超卖bug"><a href="#1-高并发下的超卖bug" class="headerlink" title="1. 高并发下的超卖bug"></a>1. 高并发下的超卖bug</h2><p>先看一个简单的减库存代码</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.redisson<br><span class="hljs-keyword">import</span> ...<br><br><span class="hljs-meta">@RestController</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">IndexController</span></span>&#123;<br>    <br>    <span class="hljs-meta">@Autiwired</span><br>    <span class="hljs-keyword">private</span> Redssion redisson;<br>    <br>    <span class="hljs-meta">@Autiwired</span><br>    <span class="hljs-keyword">private</span> StringRedisTemplate stringRedisTemplate;<br>    <br>    <span class="hljs-meta">@RequestMapping(&quot;/deduct_stock&quot;)</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">deductStock</span><span class="hljs-params">()</span></span>&#123;<br>        <br>        <span class="hljs-keyword">int</span> stock = Integer.parseInt(stringRedisTemplate.opsForValue().get(<span class="hljs-string">&quot;stock&quot;</span>)); <span class="hljs-comment">// jedis.get(&quot;stock&quot;)</span><br>        <span class="hljs-keyword">if</span>(stock &gt; <span class="hljs-number">0</span>)&#123;<br>            <span class="hljs-keyword">int</span> realStock = stock -<span class="hljs-number">1</span>;<br>            stringRedisTemplate.opsForValue().set(<span class="hljs-string">&quot;stock&quot;</span>, realStock + <span class="hljs-string">&quot;&quot;</span>); <span class="hljs-comment">// jedis.set(key, value)</span><br>            System.out.println(<span class="hljs-string">&quot;扣减成功， 剩余库存：&quot;</span> + realStock);<br>        &#125; <span class="hljs-keyword">else</span> &#123;<br>            System.out.println(<span class="hljs-string">&quot;扣减失败， 剩余库存不足&quot;</span>);<br>        &#125;<br>        <br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;end&quot;</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
@@ -401,6 +401,12 @@
                 <div class="post-prevnext">
                   <article class="post-prev col-6">
                     
+                    
+                      <a href="/2021/04/01/Redis%E7%BC%93%E5%AD%98%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8F%8C%E5%86%99%E4%B8%8D%E4%B8%80%E8%87%B4/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Redis缓存数据库双写不一致</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
                     
                   </article>
                   <article class="post-next col-6">
