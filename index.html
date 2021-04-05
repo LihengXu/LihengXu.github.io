@@ -194,6 +194,66 @@
     
     
       <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2021/04/05/Java%E7%B1%BB%E5%8A%A0%E8%BD%BD%E6%97%B6%E6%9C%BA/" target="_self">
+          <img src="/img/blog/Java.png" srcset="/img/loading.gif" alt="Java触发类加载的情况">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/04/05/Java%E7%B1%BB%E5%8A%A0%E8%BD%BD%E6%97%B6%E6%9C%BA/">Java触发类加载的情况</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/04/05/Java%E7%B1%BB%E5%8A%A0%E8%BD%BD%E6%97%B6%E6%9C%BA/">
+          
+          
+            
+          
+          Java类加载的时机Java虚拟机规范没有强制性约束在什么时候开始类加载过程，但是对于初始化阶段，虚拟机规范则严格规定了有且只有四种情况必需立即对类进行“初始化”（而加载、验证、准备阶段则必需在此之前开始）
+1. 四种情况归类
+遇到new、getstatic、putstatic或invokestatic这4条字节码指令时，如果类没有进行过初始化，则需要先触发其初始化。生成这4条指令最常见的Java
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-04-05 17:26" pubdate>
+              2021-04-05
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/Java/">Java</a>
+            
+              <a href="/categories/Java/JVM/">JVM</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Java/">Java</a>
+            
+              <a href="/tags/JVM/">JVM</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2021/04/03/JUnit%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E3%80%81%E5%8F%8D%E5%B0%84%E3%80%81%E6%B3%A8%E8%A7%A3%E3%80%81%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E3%80%81JDK8%E6%96%B0%E7%89%B9%E6%80%A7/" target="_self">
           <img src="/img/blog/Java.png" srcset="/img/loading.gif" alt="JUnit单元测试、反射、注解、动态代理">
         </a>
@@ -745,75 +805,6 @@ HTTP + SSL = HTTPS
             <i class="iconfont icon-date"></i>
             <time datetime="2021-03-28 16:31" pubdate>
               2021-03-28
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/Database/">Database</a>
-            
-              <a href="/categories/Database/Redis/">Redis</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Redis/">Redis</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2021/03/27/Redis%E9%AB%98%E7%BA%A7/" target="_self">
-          <img src="/img/blog/Redis.png" srcset="/img/loading.gif" alt="Redis高级">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/03/27/Redis%E9%AB%98%E7%BA%A7/">Redis高级</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/03/27/Redis%E9%AB%98%E7%BA%A7/">
-          
-          
-            
-          
-          Redis高级基于黑马Redis的视频的学习笔记
-1. Linux环节安装1.1 安装
-1.2 启动方式
-普通默认端口启动
-
-1234# 默认端口开启redis-serve# 默认端口连接redis-cli
-
-
-指定端口启动
-
-1234# 换端口启动redis-server --port 6380# 连接客户端指定端口连接redis-cli -p 6380
-
-
-指定配置文件启动 redis-637
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-03-27 16:37" pubdate>
-              2021-03-27
             </time>
           </div>
         
