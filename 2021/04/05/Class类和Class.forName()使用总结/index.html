@@ -372,7 +372,12 @@
 </li>
 </ol>
 <h3 id="2-3-Class-forName和ClassLoader的区别"><a href="#2-3-Class-forName和ClassLoader的区别" class="headerlink" title="2.3 Class.forName和ClassLoader的区别"></a>2.3 Class.forName和ClassLoader的区别</h3><blockquote>
-<p>java中class.forName()和classLoader都可用来对类进行加载。<br>class.forName()前者除了将类的.class文件加载到jvm中之外，还会对类进行解释，执行类中的static块。<br>classLoader只干一件事情，就是将.class文件加载到jvm中，不会执行static中的内容,只有在newInstance才会去执行static块。<br>Class.forName(name, initialize, loader)带参函数也可控制是否加载static块。并且只有调用了newInstance()方法采用调用构造函数，创建类的对象。</p>
+<p>java中class.forName()和classLoader都可用来对类进行加载。</p>
+<ol>
+<li>class.forName()前者除了将类的.class文件加载到jvm中之外，还会对类进行解释，执行类中的static块</li>
+<li>classLoader只干一件事情，就是将.class文件加载到jvm中，不会执行static中的内容,只有在newInstance才会去执行static块。</li>
+<li>Class.forName(name, initialize, loader)带参函数也可控制是否加载static块。并且只有调用了newInstance()方法采用调用构造函数，创建类的对象。</li>
+</ol>
 </blockquote>
 <p>java类加载分三步：</p>
 <p><img src="https://cdn.jsdelivr.net/gh/LihengXu/mycdn/img/%E7%B1%BB%E5%8A%A0%E8%BD%BD%E6%97%B6%E6%9C%BA_2_20210405.png" srcset="/img/loading.gif"></p>
