@@ -199,7 +199,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      6.7k 字
+      6.8k 字
     </span>
   
 
@@ -209,7 +209,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      101
+      102
        分钟
     </span>
   
@@ -380,7 +380,8 @@
 </blockquote>
 <p><img src="https://cdn.jsdelivr.net/gh/LihengXu/mycdn/img/4_ComparisonOfTheFiveIO.png" srcset="/img/loading.gif"></p>
 <p>经过上面的介绍，会发现non-blocking IO和asynchronous IO的区别还是很明显的。在non-blocking IO中，虽然进程大部分时间都不会被block，但是它仍然要求进程去主动的check，并且当数据准备完成以后，也需要进程主动的再次调用recvfrom来将数据拷贝到用户内存。而asynchronous IO则完全不同。它就像是用户进程将整个IO操作交给了他人（kernel）完成，然后他人做完后发信号通知。在此期间，用户进程不需要去检查IO操作的状态，也不需要主动的去拷贝数据。</p>
-<h3 id="1-6-select，poll，epoll区别"><a href="#1-6-select，poll，epoll区别" class="headerlink" title="1.6 select，poll，epoll区别"></a>1.6 select，poll，epoll区别</h3><p>他们是NIO中多路复用的三种实用机制（底层是三个C++的API），是由Linux操作系统提供的。</p>
+<h3 id="1-6-select，poll，epoll区别"><a href="#1-6-select，poll，epoll区别" class="headerlink" title="1.6 select，poll，epoll区别"></a>1.6 select，poll，epoll区别</h3><p>知乎这篇文章把底层讲得很清楚（一共三篇）：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/64746509">https://zhuanlan.zhihu.com/p/64746509</a></p>
+<p>他们是NIO中多路复用的三种实用机制（底层是三个C++的API），是由Linux操作系统提供的。</p>
 <p>Unix，Linux操作系统的一些基本知识：</p>
 <ul>
 <li><p>用户空间和内核空间：操作系统为了保护系统安全，将内核划分为两部分，一个是用户空间，一个是内核空间。用户空间不能直接访问底层的硬件设备，必须通过内核空间</p>
