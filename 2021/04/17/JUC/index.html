@@ -199,7 +199,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      24k 字
+      24.5k 字
     </span>
   
 
@@ -209,7 +209,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      391
+      397
        分钟
     </span>
   
@@ -1084,6 +1084,55 @@
 <p>导致其他处理器的缓存无效</p>
 <ul>
 <li>在多核处理器系统中进行操作的时候，IA-32和Intel 64处理器能<strong>嗅探其他处理器访问系统内存和它们的内部缓存</strong>。处理器使用嗅探技术保证它的内部缓存、系统内存和其他处理器的缓存的数据在总线上保持一致</li>
+</ul>
+</li>
+</ul>
+<h3 id="补充：单例模式线程安全的一些问题"><a href="#补充：单例模式线程安全的一些问题" class="headerlink" title="补充：单例模式线程安全的一些问题"></a>补充：单例模式线程安全的一些问题</h3><ul>
+<li><p>饿汉</p>
+<p><img src="https://cdn.jsdelivr.net/gh/LihengXu/mycdn/img/JUC_2_20210420.png" srcset="/img/loading.gif"></p>
+<ul>
+<li>问题一：final可以防止子类不适当的方法破坏单例</li>
+<li>问题二：（见上图）在反序列化中，会把readResolve方法中的对象作为反序列化结果，保证反序列化后依然是同一个对象。</li>
+<li>问题三：私有防止别人调用构造方法</li>
+<li>问题四：能保证，类加载阶段完成初始化，jvm保证线程安全</li>
+<li>问题五：<ul>
+<li>方法提供了更好的封装性，可以内部实现懒惰初始化</li>
+<li>可以对创建对象做更多的控制 </li>
+<li>可以提供泛型的支持</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>枚举</p>
+<p><img src="https://cdn.jsdelivr.net/gh/LihengXu/mycdn/img/JUC_3_20210420.png" srcset="/img/loading.gif"></p>
+<ul>
+<li>问题一：枚举中定义的对象相当于枚举类的静态成员变量，定义时有几个，后面就有几个对象</li>
+<li>问题二：静态成员变量，类加载阶段完成初始化，jvm保证线程安全</li>
+<li>问题三：不能</li>
+<li>问题四：可以避免反序列破坏单例</li>
+<li>问题五：饿汉式</li>
+<li>问题六：加一个构造方法，写入一些初始化逻辑</li>
+</ul>
+</li>
+<li><p>懒汉</p>
+<p><img src="https://cdn.jsdelivr.net/gh/LihengXu/mycdn/img/JUC_4_20210420.png" srcset="/img/loading.gif"></p>
+<ul>
+<li>问题：是线程安全的，但是锁的范围过大，每次都加锁</li>
+</ul>
+</li>
+<li><p>懒汉改进</p>
+<p><img src="https://cdn.jsdelivr.net/gh/LihengXu/mycdn/img/JUC_5_20210420.png" srcset="/img/loading.gif"></p>
+<ul>
+<li>问题一：防止synchronized内发生指令重排序，具体就是保证INSTANCE = new Singlenton( )；不会和前面的指令发生重排序（写屏障实现）。</li>
+<li>问题二：缩小了同步代码块的范围，只有第一次上锁（双重检查）</li>
+<li>问题三：防止首次创建的并发问题（首次多个线程都通过了第一个if）</li>
+</ul>
+</li>
+<li><p>静态内部类实现</p>
+<p><img src="https://cdn.jsdelivr.net/gh/LihengXu/mycdn/img/JUC_6_20210420.png" srcset="/img/loading.gif"></p>
+<ul>
+<li>问题一：懒汉</li>
+<li>问题二：没有，调用getInstance方法触发内部类的类加载完成初始化，jvm保证线程安全</li>
 </ul>
 </li>
 </ul>
