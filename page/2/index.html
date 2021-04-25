@@ -194,6 +194,69 @@
     
     
       <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2021/04/01/Redis%E7%BC%93%E5%AD%98%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8F%8C%E5%86%99%E4%B8%8D%E4%B8%80%E8%87%B4/" target="_self">
+          <img src="/img/blog/Redis.png" srcset="/img/loading.gif" alt="Redis缓存数据库双写不一致">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/04/01/Redis%E7%BC%93%E5%AD%98%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8F%8C%E5%86%99%E4%B8%8D%E4%B8%80%E8%87%B4/">Redis缓存数据库双写不一致</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/04/01/Redis%E7%BC%93%E5%AD%98%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8F%8C%E5%86%99%E4%B8%8D%E4%B8%80%E8%87%B4/">
+          
+          
+            
+          
+          Redis缓存数据库双写不一致学习笔记
+1. 示例1.1 示例一
+线程一：写数据库stock=10，之后发生卡顿或者延迟了很久才更新缓存
+线程二：在线程一之后写数据库stock=6，然后更新了缓存stock=6
+线程一：再线程二更新缓存结束后，卡顿或者延迟结束，更新缓存stock=10
+结果：导致数据库stock=6，而缓存stock=10
+解决方法：更新数据库之后删除缓存。
+但是依然有问题，见示
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-04-01 15:55" pubdate>
+              2021-04-01
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/Database/">Database</a>
+            
+              <a href="/categories/Database/Redis/">Redis</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Redis/">Redis</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2021/03/31/Redis%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%E7%9A%84%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3/" target="_self">
           <img src="/img/blog/Redis.png" srcset="/img/loading.gif" alt="Redis分布式锁的深入理解">
         </a>
@@ -790,70 +853,6 @@ me
               <a href="/tags/TCP/">TCP</a>
             
               <a href="/tags/UDP/">UDP</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2021/03/18/BIO_AIO_NIO%E5%8C%BA%E5%88%AB/" target="_self">
-          <img src="/img/blog/Java.png" srcset="/img/loading.gif" alt="BIO_AIO_NIO区别">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/03/18/BIO_AIO_NIO%E5%8C%BA%E5%88%AB/">BIO_AIO_NIO区别</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/03/18/BIO_AIO_NIO%E5%8C%BA%E5%88%AB/">
-          
-          
-            
-          
-          BIO_AIO_NIO区别
-简单对比：
-
-BIO 就是传统的 java.io 包，它是基于流模型实现的，交互的方式是同步、阻塞方式，也就是说在读入输入流或者输出流时，在读写动作完成之前，线程会一直阻塞在那里，它们之间的调用时可靠的线性顺序。它的有点就是代码比较简单、直观；缺点就是 IO 的效率和扩展性很低，容易成为应用性能瓶颈。
-NIO 是 Java 1.4 引入的 java.nio 包，提供了 
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-03-18 21:40" pubdate>
-              2021-03-18
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/Java/">Java</a>
-            
-              <a href="/categories/Java/IO/">IO</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Java/">Java</a>
-            
-              <a href="/tags/Network/">Network</a>
-            
-              <a href="/tags/IO/">IO</a>
             
           </div>
         
