@@ -574,7 +574,7 @@
 <ul>
 <li><p>此时便会给对象加上重量级锁（使用Monitor）</p>
 <ul>
-<li><p>将对象头的Mark Word改为Monitor的地址，并且状态改为01(重量级锁)</p>
+<li><p>将对象头的Mark Word改为Monitor的地址，并且状态改为10(重量级锁)</p>
 </li>
 <li><p>并且该线程放入入EntryList中，并进入阻塞状态(blocked)</p>
 <p><a target="_blank" rel="noopener" href="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608145148.png"><img src="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608145148.png" srcset="/img/loading.gif" alt="img"></a></p>
