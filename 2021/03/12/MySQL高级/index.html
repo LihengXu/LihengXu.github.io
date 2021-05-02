@@ -395,8 +395,7 @@
 <p><img src="https://cdn.jsdelivr.net/gh/LihengXu/mycdn/img/MySQL%E9%AB%98%E7%BA%A7_7_SQL%E8%A7%A3%E6%9E%90.png" srcset="/img/loading.gif"></p>
 </li>
 <li><p>Join图（重点，基本功一定要记住）：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/LihengXu/mycdn/img/MySQL%E9%AB%98%E7%BA%A7_8_join%E5%9B%BE.png" srcset="/img/loading.gif"></p>
-<p><img src="https://cdn.jsdelivr.net/gh/LihengXu/mycdn/img/MySQL%E9%AB%98%E7%BA%A7_9_join%E5%9B%BE.png" srcset="/img/loading.gif"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/LihengXu/mycdn/img/MySQL%E9%AB%98%E7%BA%A7_8_join%E5%9B%BEx.png" srcset="/img/loading.gif"></p>
 </li>
 </ul>
 <h3 id="2-3-索引简介"><a href="#2-3-索引简介" class="headerlink" title="2.3 索引简介"></a>2.3 索引简介</h3><h4 id="2-3-1-索引是什么（重点）"><a href="#2-3-1-索引是什么（重点）" class="headerlink" title="2.3.1 索引是什么（重点）"></a>2.3.1 索引是什么（重点）</h4><blockquote>
@@ -940,7 +939,7 @@
 <li><p>随机产生字符串</p>
   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs mysql">DELIMITER $$<br>CREATE FUNCTION rand_string(n INT) RETURNS VARCHAR(255)<br>BEGIN    ##方法开始 <br>DECLARE chars_str VARCHAR(100) DEFAULT   &#39;abcdefghijklmnopqrstuvwxyzABCDEFJHIJKLMNOPQRSTUVWXYZ&#39;;  ##声明一个 字符窜长度为 100 的变量 chars_str ,默认值  <br>DECLARE return_str VARCHAR(255) DEFAULT &#39;&#39;; DECLARE i INT DEFAULT 0;  ##循环开始<br>WHILE i &lt; n DO   <br>SET return_str &#x3D;CONCAT(return_str,SUBSTRING(chars_str,FLOOR(1+RAND()*52),1));##concat 连接函数  ，substring(a,index,length) 从index处开始截取<br>SET i &#x3D; i + 1;<br>END WHILE;<br>RETURN return_str;<br>END $$ <br># 假如要删除<br># drop function rand_string;<br></code></pre></td></tr></table></figure></li>
 <li><p>随机产生部门编号</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs mysql">    DELIMITER $$<br>    CREATE FUNCTION rand_num( ) RETURNS INT(5)<br>BEGIN    <br>    DECLARE i INT DEFAULT 0;<br>    SET i &#x3D; FLOOR(100+RAND()*10);<br>    RETURN i;<br>    END $$  <br>    # 假如要删除<br>    # drop function rand_num;<br></code></pre></td></tr></table></figure></li>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs mysql">DELIMITER $$<br>CREATE FUNCTION rand_num( ) RETURNS INT(5)<br>BEGIN    <br>DECLARE i INT DEFAULT 0;<br>SET i &#x3D; FLOOR(100+RAND()*10);<br>RETURN i;<br>END $$  <br># 假如要删除<br># drop function rand_num;<br></code></pre></td></tr></table></figure></li>
 </ul>
 </li>
 <li><p>创建存储过程</p>
