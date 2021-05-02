@@ -927,7 +927,7 @@
 <h4 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a><strong>总结</strong></h4><p>在每个线程内部都有一个名为threadLocals的成员变量，该变量的类型为HashMap，其中<strong>key为我们定义的ThreadLocal变量的this引用，value则为我们使用set方法设置的值</strong>。每个线程的本地变量存放在线程自己的内存变量threadLocals中</p>
 <p>只有当前线程<strong>第一次调用ThreadLocal的set或者get方法时才会创建threadLocals</strong>（inheritableThreadLocals也是一样）。其实每个线程的本地变量不是存放在ThreadLocal实例里面，而是存放在调用线程的threadLocals变量里面</p>
 <h2 id="15、InheritableThreadLocal"><a href="#15、InheritableThreadLocal" class="headerlink" title="15、InheritableThreadLocal"></a>15、InheritableThreadLocal</h2><h3 id="简介-1"><a href="#简介-1" class="headerlink" title="简介"></a>简介</h3><p>从ThreadLocal的源码可以看出，无论是set、get、还是remove，都是相对于当前线程操作的</p>
-<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs reasonml"><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Thread</span>.</span></span>current<span class="hljs-constructor">Thread()</span>Copy<br></code></pre></td></tr></table></figure>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs reasonml"><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Thread</span>.</span></span>current<span class="hljs-constructor">Thread()</span><br></code></pre></td></tr></table></figure>
 
 <p>所以ThreadLocal无法从父线程传向子线程，所以InheritableThreadLocal出现了，<strong>它能够让父线程中ThreadLocal的值传给子线程。</strong></p>
 <p>也就是从main所在的线程，传给thread1或thread2</p>
