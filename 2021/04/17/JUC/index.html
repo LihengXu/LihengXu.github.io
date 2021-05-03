@@ -199,7 +199,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      26.7k 字
+      26.8k 字
     </span>
   
 
@@ -209,7 +209,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      436
+      437
        分钟
     </span>
   
@@ -1410,6 +1410,10 @@
 <li>使用final修饰的静态成员变量，访问时可以直接访问复制到栈内存的拷贝（效率高），而不是访问静态成员变量的共享内存（堆）</li>
 <li>静态成员变量超过了short的最大值，则会放在常量池（堆）中，使用final修饰同样可以实现访问复制到栈内存的拷贝（效率高）</li>
 </ul>
+<h2 id="5、无状态"><a href="#5、无状态" class="headerlink" title="5、无状态"></a>5、无状态</h2><p>在 web 阶段学习时，设计 Servlet 时为了保证其线程安全，都会有这样的建议，不要为 Servlet 设置成员变量，这<br>种没有任何成员变量的类是线程安全的</p>
+<blockquote>
+<p>因为成员变量保存的数据也可以称为状态信息，因此没有成员变量就称之为【无状态】</p>
+</blockquote>
 <h1 id="七、线程池"><a href="#七、线程池" class="headerlink" title="七、线程池"></a>七、线程池</h1><h2 id="1、自定义线程池"><a href="#1、自定义线程池" class="headerlink" title="1、自定义线程池"></a>1、自定义线程池</h2><h3 id="图解"><a href="#图解" class="headerlink" title="图解"></a>图解</h3><p><a target="_blank" rel="noopener" href="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20201021154837.png"><img src="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20201021154837.png" srcset="/img/loading.gif" alt="img"></a></p>
 <ul>
 <li>阻塞队列中维护了由主线程（或者其他线程）所产生的的任务</li>
