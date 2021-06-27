@@ -199,7 +199,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      62 字
+      3.1k 字
     </span>
   
 
@@ -209,7 +209,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      1
+      55
        分钟
     </span>
   
@@ -253,7 +253,228 @@
               <h1 id="SSM基础框架学习"><a href="#SSM基础框架学习" class="headerlink" title="SSM基础框架学习"></a>SSM基础框架学习</h1><blockquote>
 <p>前言：最近一直在实习，没怎么更新笔记了，由于蚂蚁的SOFA和SOFABoot就是基于Spring和SpringBoot的，所以这里复习一下SSM（之前spring学了一个半吊子，迫于无奈复习🐕）</p>
 </blockquote>
+<h2 id="1-Spring-简介"><a href="#1-Spring-简介" class="headerlink" title="1. Spring 简介"></a>1. Spring 简介</h2><h3 id="1-1-Spring-是什么"><a href="#1-1-Spring-是什么" class="headerlink" title="1.1 Spring 是什么"></a>1.1 Spring 是什么</h3><p>Spring是分层的 Java SE/EE应用 full-stack 轻量级开源框架，以 <font color=#FF0000><strong>IoC</strong></font>（Inverse Of Control：反转控制）和  <font color=#FF0000><strong>AOP</strong></font>（Aspect Oriented Programming：面向切面编程）为内核。</p>
+<p>提供了<font color=#FF0000><strong>展现层</strong> <strong>SpringMVC</strong></font> 和<font color=#FF0000><strong>持久层</strong> <strong>Spring</strong> <strong>JDBCTemplate</strong> </font>以及<font color=#FF0000><strong>业务层事务管理</strong></font>等众多的企业级应用技术，还能整合开源世界众多著名的第三方框架和类库，逐渐成为使用最多的Java EE 企业应用开源框架。</p>
+<h3 id="1-2-Spring-发展历程"><a href="#1-2-Spring-发展历程" class="headerlink" title="1.2 Spring 发展历程"></a>1.2 Spring 发展历程</h3><p>1997 年， IBM提出了EJB 的思想</p>
+<p>1998 年，SUN制定开发标准规范 EJB1.0</p>
+<p>1999 年，EJB1.1 发布</p>
+<p>2001 年，EJB2.0 发布</p>
+<p>2003 年，EJB2.1 发布</p>
+<p>2006 年，EJB3.0 发布</p>
+<p><strong>Rod Johnson</strong> <strong>（</strong> <strong>Spring</strong> <strong>之父）</strong></p>
+<p>Expert One-to-One J2EE Design and Development(2002)</p>
+<p>阐述了 J2EE 使用EJB 开发设计的优点及解决方案</p>
+<p>Expert One-to-One J2EE Development without EJB(2004)</p>
+<p>阐述了 J2EE 开发不使用 EJB的解决方式（Spring 雏形）</p>
+<p><strong>2017</strong> <strong>年</strong> <strong>9</strong> <strong>月份发布了</strong> <strong>Spring</strong> <strong>的最新版本</strong> <strong>Spring5.0</strong> <strong>通用版（GA）</strong></p>
+<h3 id="1-3-Spring-优势"><a href="#1-3-Spring-优势" class="headerlink" title="1.3 Spring 优势"></a>1.3 Spring 优势</h3><ol>
+<li>方便解耦，简化开发（IOC容器）</li>
+<li>AOP 编程的支持（AOP可以轻松解决一些OOP不容易实现的功能）</li>
+<li>声明式事务的支持</li>
+<li>方便程序测试</li>
+<li>方便继承各种优秀框架</li>
+<li>降低JavaEE API 的使用难度（对JDBC、JavaMail、远程调用等进行了薄封装减低使用难度）</li>
+<li>Java 源码式经典学习范例（灵活运用 Java 设计模式）</li>
+</ol>
+<h3 id="1-4-Spring-体系结构"><a href="#1-4-Spring-体系结构" class="headerlink" title="1.4 Spring 体系结构"></a>1.4 Spring 体系结构</h3><p><img src="https://cdn.jsdelivr.net/gh/LihengXu/mycdn/img/SSM-1-20210627.png" srcset="/img/loading.gif"></p>
+<h3 id="1-5-SSM-三层架构"><a href="#1-5-SSM-三层架构" class="headerlink" title="1.5 SSM 三层架构"></a>1.5 SSM 三层架构</h3><p><img src="https://cdn.jsdelivr.net/gh/LihengXu/mycdn/img/SSM-2-20210628.png" srcset="/img/loading.gif"></p>
+<p>而其中 MVC 设计模型：</p>
+<ul>
+<li>M：model 模型 JavaBean</li>
+<li>V：View 视图 JSP</li>
+<li>C：Controller 控制器 Servlet</li>
+</ul>
+<h2 id="2-Spring-IoC思想"><a href="#2-Spring-IoC思想" class="headerlink" title="2. Spring IoC思想"></a>2. Spring IoC思想</h2><h3 id="2-1-快速入门"><a href="#2-1-快速入门" class="headerlink" title="2.1 快速入门"></a>2.1 快速入门</h3><p>通过快速入门简单体会 IoC ，把对象创建权交给了Spring框架，通过 IoC 能降低耦合但是不能接触耦合</p>
+<p><img src="https://cdn.jsdelivr.net/gh/LihengXu/mycdn/img/SSM-3-20210628.png" srcset="/img/loading.gif"></p>
+<p>① 新建Maven工程，导入 Spring 开发的基本包坐标</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">properties</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">spring.version</span>&gt;</span>5.0.5.RELEASE<span class="hljs-tag">&lt;/<span class="hljs-name">spring.version</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">properties</span>&gt;</span><br><br><span class="hljs-tag">&lt;<span class="hljs-name">dependencies</span>&gt;</span><br>    <span class="hljs-comment">&lt;!--导入spring的context坐标，context依赖core、beans、expression--&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-context<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>$&#123;spring.version&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependencies</span>&gt;</span><br></code></pre></td></tr></table></figure>
 
+<p>② 编写 Dao 接口和实现类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">UserDao</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">save</span><span class="hljs-params">()</span></span>;<br>&#125;<br><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserDaoImpl</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">UserDao</span> </span>&#123;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">save</span><span class="hljs-params">()</span> </span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;UserDao save method running....&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>③ 在类路径下（resources）创建 Spring 核心配置文件 applicationContext.xml</p>
+<p>④ 在 Spring 配置文件中配置 UserDaoImpl</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-meta">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">beans</span> <span class="hljs-attr">xmlns</span>=<span class="hljs-string">&quot;http://www.springframework.org/schema/beans&quot;</span></span><br><span class="hljs-tag">       <span class="hljs-attr">xmlns:xsi</span>=<span class="hljs-string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span><br><span class="hljs-tag">       <span class="hljs-attr">xsi:schemaLocation</span>=<span class="hljs-string">&quot;</span></span><br><span class="hljs-tag"><span class="hljs-string">                           http://www.springframework.org/schema/beans </span></span><br><span class="hljs-tag"><span class="hljs-string">                           http://www.springframework.org/schema/beans/spring-beans.xsd&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;userDao&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;com.itheima.dao.impl.UserDaoImpl&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">beans</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>⑤ 使用 Spring 的 API 创建 ApplicationContext 对象，使用 getBean 方法获得 Bean 实例</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Test</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">test1</span><span class="hljs-params">()</span></span>&#123;<br>    ApplicationContext applicationContext = <span class="hljs-keyword">new</span>  <br>             ClassPathXmlApplicationContext(<span class="hljs-string">&quot;applicationContext.xml&quot;</span>);<br>    UserDao userDao = (UserDao) applicationContext.getBean(<span class="hljs-string">&quot;userDao&quot;</span>);<br>    userDao.save();<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+
+
+<h3 id="2-2-Spring-配置文件方式"><a href="#2-2-Spring-配置文件方式" class="headerlink" title="2.2 Spring 配置文件方式"></a>2.2 Spring 配置文件方式</h3><h4 id="2-2-1-Spring的重点配置"><a href="#2-2-1-Spring的重点配置" class="headerlink" title="2.2.1 Spring的重点配置"></a>2.2.1 Spring的重点配置</h4><figure class="highlight delphi"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs delphi">&lt;bean&gt;标签<br>    id属性:在容器中Bean实例的唯一标识，不允许重复<br>    <span class="hljs-keyword">class</span>属性:要实例化的Bean的全限定名<br>    scope属性:Bean的作用范围，常用是Singleton(默认)和prototype<br>    &lt;<span class="hljs-keyword">property</span>&gt;标签：属性注入<br>        <span class="hljs-keyword">name</span>属性：属性名称<br>        value属性：注入的普通属性值<br>        ref属性：注入的对象引用值<br>        &lt;list&gt;标签<br>        &lt;map&gt;标签<br>        &lt;properties&gt;标签<br>    &lt;<span class="hljs-function"><span class="hljs-keyword">constructor</span>-<span class="hljs-title">arg</span>&gt;标签</span><br><span class="hljs-function">&lt;<span class="hljs-title">import</span>&gt;标签:</span>导入其他的Spring的分文件<br></code></pre></td></tr></table></figure>
+
+
+
+<h4 id="2-2-2-Bean-标签基本配置"><a href="#2-2-2-Bean-标签基本配置" class="headerlink" title="2.2.2 Bean 标签基本配置"></a>2.2.2 Bean 标签基本配置</h4><p>用于配置对象交由<strong>Spring</strong> 来创建。</p>
+<p>默认情况下它调用的是类中的<strong>无参构造函数</strong>，如果没有无参构造函数则不能创建成功。</p>
+<p>示例：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;xxx&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;com.xxx.xxx&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>基本属性：</p>
+<ul>
+<li><p><strong>id</strong>：Bean实例在Spring容器中的唯一标识</p>
+</li>
+<li><p><strong>class</strong>：Bean的全限定名称</p>
+</li>
+</ul>
+<h4 id="2-2-3-Bean-标签范围配置"><a href="#2-2-3-Bean-标签范围配置" class="headerlink" title="2.2.3 Bean 标签范围配置"></a>2.2.3 Bean 标签范围配置</h4><p><img src="https://cdn.jsdelivr.net/gh/LihengXu/mycdn/img/SSM-4-20210628.png" srcset="/img/loading.gif"></p>
+<ul>
+<li><p>当 <strong>scope</strong> 的取值为 <strong>singleton</strong> 时</p>
+<p>Bean的实例化个数：1个</p>
+<p>Bean的实例化时机： <font color=#FF0000><strong>当Spring核心文件被加载时，实例化配置的Bean实例</strong></font></p>
+<p>Bean的生命周期：</p>
+<ul>
+<li>对象创建：当应用加载，创建容器时，对象就被创建了</li>
+<li>对象运行：只要容器在，对象一直活着</li>
+<li>对象销毁：当应用卸载，销毁容器时，对象就被销毁了</li>
+</ul>
+</li>
+<li><p>当 <strong>scope</strong> 的取值为 prototype 时</p>
+<p>Bean的实例化个数：多个</p>
+<p>Bean的实例化时机： <font color=#FF0000><strong>当调用getBean()方法时实例化Bean</strong></font></p>
+<ul>
+<li>对象创建：当使用对象时，创建新的对象实例</li>
+<li>对象运行：只要对象在使用中，就一直活着</li>
+<li>对象销毁：当对象长时间不用时，被 Java 的垃圾回收器回收了</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-2-4-Bean-生命周期配置"><a href="#2-2-4-Bean-生命周期配置" class="headerlink" title="2.2.4 Bean 生命周期配置"></a>2.2.4 Bean 生命周期配置</h4><ul>
+<li><p><strong>init-method</strong>：指定类中的初始化方法名称</p>
+</li>
+<li><p><strong>destroy-method</strong>：指定类中销毁方法名称</p>
+</li>
+</ul>
+<p>示例：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;userDao&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;com.itheima.dao.impl.UserDaoImpl&quot;</span> <span class="hljs-attr">init-method</span>=<span class="hljs-string">&quot;init&quot;</span> <span class="hljs-attr">destroy-method</span>=<span class="hljs-string">&quot;destory&quot;</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+
+
+<h4 id="2-2-5-Bean-实例化三种方法"><a href="#2-2-5-Bean-实例化三种方法" class="headerlink" title="2.2.5 Bean 实例化三种方法"></a>2.2.5 Bean 实例化三种方法</h4><ul>
+<li><p>无参<strong>构造</strong>方法实例化（默认）</p>
+</li>
+<li><p>工厂<strong>静态</strong>方法实例化</p>
+</li>
+<li><p>工厂<strong>实例</strong>方法实例化 </p>
+</li>
+</ul>
+<ol>
+<li><p><strong>使用无参构造方法实例化</strong></p>
+<p>它会根据默认无参构造方法来创建类对象，如果bean中没有默认无参构造函数，将会创建失败</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;userDao&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;com.itheima.dao.impl.UserDaoImpl&quot;</span>/&gt;</span><br></code></pre></td></tr></table></figure></li>
+<li><p><strong>工厂静态方法实例化</strong></p>
+<p>工厂的静态方法返回Bean实例</p>
+<p>由于是静态方法，所以可以在使用工厂类的 class 类对象直接直接调用返回类对象，不需要获得工厂的bean</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">StaticFactoryBean</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> UserDao <span class="hljs-title">createUserDao</span><span class="hljs-params">()</span></span>&#123;<br>    	<span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> UserDaoImpl();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;userDao&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;com.itheima.factory.StaticFactoryBean&quot;</span> </span><br><span class="hljs-tag">      <span class="hljs-attr">factory-method</span>=<span class="hljs-string">&quot;createUserDao&quot;</span> /&gt;</span><br></code></pre></td></tr></table></figure></li>
+<li><p> <strong>工厂实例方法实例化</strong></p>
+</li>
+</ol>
+<p>   工厂的非静态方法返回Bean实例</p>
+<p>   非静态方法，需要先获得工厂 bean，再通过工厂 bean 获得 userDao</p>
+   <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DynamicFactoryBean</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> UserDao <span class="hljs-title">createUserDao</span><span class="hljs-params">()</span></span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> UserDaoImpl();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+   <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;factoryBean&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;com.itheima.factory.DynamicFactoryBean&quot;</span>/&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;userDao&quot;</span> <span class="hljs-attr">factory-bean</span>=<span class="hljs-string">&quot;factoryBean&quot;</span> <span class="hljs-attr">factory-method</span>=<span class="hljs-string">&quot;createUserDao&quot;</span>/&gt;</span><br></code></pre></td></tr></table></figure>
+
+
+
+<h4 id="2-2-6-Bean-依赖注入⭐"><a href="#2-2-6-Bean-依赖注入⭐" class="headerlink" title="2.2.6 Bean 依赖注入⭐"></a>2.2.6 Bean 依赖注入⭐</h4><h5 id="2-2-6-1-分析"><a href="#2-2-6-1-分析" class="headerlink" title="2.2.6.1 分析"></a>2.2.6.1 分析</h5><p>UserService实例和UserDao实例都存在与Spring容器中，一种做法是在容器外部获得UserService实例和UserDao实例，然后在程序中进行结合。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/LihengXu/mycdn/img/SSM-5-20210628.png" srcset="/img/loading.gif"></p>
+<p>另一种做法是，因为UserService和UserDao都在Spring容器中，而最终程序直接使用的是UserService，所以可以在Spring容器中，将UserDao设置到UserService内部。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/LihengXu/mycdn/img/SSM-6-20210628.png" srcset="/img/loading.gif"></p>
+<h5 id="2-2-6-2-概念"><a href="#2-2-6-2-概念" class="headerlink" title="2.2.6.2 概念"></a>2.2.6.2 概念</h5><p><font color=#FF0000>依赖注入（<strong>Dependency Injection</strong>）：它是 Spring 框架核心 IOC 的具体实现。</font></p>
+<p>在编写程序时，通过控制反转，把对象的创建交给了 Spring，但是代码中不可能出现没有依赖的情况。</p>
+<p><font color=#FF0000><strong>IOC 解耦只是降低他们的依赖关系，但不会消除。</strong></font>例如：业务层仍会调用持久层的方法。</p>
+<p>那这种业务层和持久层的依赖关系，在使用 Spring 之后，就让 Spring 来维护了。</p>
+<p>简单的说，就是坐等框架把持久层对象传入业务层，而不用我们自己去获取。</p>
+<h5 id="2-2-6-3-依赖注入的方式"><a href="#2-2-6-3-依赖注入的方式" class="headerlink" title="2.2.6.3 依赖注入的方式"></a>2.2.6.3 依赖注入的方式</h5><ul>
+<li><p><strong>set方法</strong></p>
+<ul>
+<li><p>在UserServiceImpl中添加setUserDao方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserServiceImpl</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">UserService</span> </span>&#123;<br>    <span class="hljs-keyword">private</span> UserDao userDao;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setUserDao</span><span class="hljs-params">(UserDao userDao)</span> </span>&#123;<br>        <span class="hljs-keyword">this</span>.userDao = userDao;<br>    &#125;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">save</span><span class="hljs-params">()</span> </span>&#123;<br>        userDao.save();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure></li>
+<li><p><strong>setter注入方式1</strong>：配置Spring容器调用set方法进行注入</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;userDao&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;com.itheima.dao.impl.UserDaoImpl&quot;</span>/&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;userService&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;com.itheima.service.impl.UserServiceImpl&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;userDao&quot;</span> <span class="hljs-attr">ref</span>=<span class="hljs-string">&quot;userDao&quot;</span>/&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span><br></code></pre></td></tr></table></figure></li>
+<li><p><strong>setter注入方式2</strong>：P命名空间注入本质也是set方法注入，但比起上述的set方法注入更加方便，主要体现在配置文件中，如下：</p>
+<p>首先，需要向配置文件引入P命名空间：</p>
+<figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs avrasm"><span class="hljs-symbol">xmlns:</span>p=<span class="hljs-string">&quot;http://www.springframework.org/schema/p&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>其次，需要修改注入方式</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;userService&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;com.itheima.service.impl.UserServiceImpl&quot;</span> <span class="hljs-attr">p:userDao-ref</span>=<span class="hljs-string">&quot;userDao&quot;</span>/&gt;</span><br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p><strong>构造方法</strong></p>
+<ul>
+<li><p>创建有参构造</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserServiceImpl</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">UserService</span> </span>&#123;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">save</span><span class="hljs-params">()</span> </span>&#123;<br>        ApplicationContext applicationContext = <span class="hljs-keyword">new</span> <br>                 ClassPathXmlApplicationContext(<span class="hljs-string">&quot;applicationContext.xml&quot;</span>);<br>        UserDao userDao = (UserDao) applicationContext.getBean(<span class="hljs-string">&quot;userDao&quot;</span>);<br>        userDao.save();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure></li>
+<li><p>   配置Spring容器调用有参构造时进行注入</p>
+</li>
+</ul>
+  <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;userDao&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;com.itheima.dao.impl.UserDaoImpl&quot;</span>/&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;userService&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;com.itheima.service.impl.UserServiceImpl&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">constructor-arg</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;userDao&quot;</span> <span class="hljs-attr">ref</span>=<span class="hljs-string">&quot;userDao&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">constructor-arg</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h5 id="2-2-6-4-依赖注入数据类型"><a href="#2-2-6-4-依赖注入数据类型" class="headerlink" title="2.2.6.4 依赖注入数据类型"></a>2.2.6.4 依赖注入数据类型</h5><p>上面的操作，都是注入的引用Bean，除了对象的引用可以注入，普通数据类型，集合等都可以在容器中进行注入。</p>
+<p>注入数据的三种数据类型 </p>
+<ul>
+<li><p><strong>普通数据类型</strong></p>
+</li>
+<li><p><strong>引用数据类型</strong></p>
+</li>
+<li><p><strong>集合数据类型</strong></p>
+</li>
+</ul>
+<p>其中引用数据类型，此处就不再赘述了，之前的操作都是对UserDao对象的引用进行注入的，下面将以set方法注入为例，演示普通数据类型和集合数据类型的注入。</p>
+<p>示例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserDaoImpl</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">UserDao</span> </span>&#123;<br>    <span class="hljs-keyword">private</span> String company;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> age;<br>    <span class="hljs-keyword">private</span> List&lt;String&gt; strList;<br>    <span class="hljs-keyword">private</span> List&lt;User&gt; userList;<br>    <span class="hljs-keyword">private</span> Map&lt;String,User&gt; userMap;<br>    <span class="hljs-keyword">private</span> Properties properties;<br>    <br>    <span class="hljs-comment">// 普通数据类型</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setCompany</span><span class="hljs-params">(String company)</span> </span>&#123;<br>        <span class="hljs-keyword">this</span>.company = company;<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setAge</span><span class="hljs-params">(<span class="hljs-keyword">int</span> age)</span> </span>&#123;<br>        <span class="hljs-keyword">this</span>.age = age;<br>    &#125;<br>    <br>    <span class="hljs-comment">// 集合数据类型</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setStrList</span><span class="hljs-params">(List&lt;String&gt; strList)</span> </span>&#123;<br>        <span class="hljs-keyword">this</span>.strList = strList;<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setUserList</span><span class="hljs-params">(List&lt;User&gt; userList)</span> </span>&#123;<br>        <span class="hljs-keyword">this</span>.userList = userList;<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setUserMap</span><span class="hljs-params">(Map&lt;String, User&gt; userMap)</span> </span>&#123;<br>        <span class="hljs-keyword">this</span>.userMap = userMap;<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setProperties</span><span class="hljs-params">(Properties properties)</span> </span>&#123;<br>        <span class="hljs-keyword">this</span>.properties = properties;<br>    &#125;<br>    <br>    <br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">save</span><span class="hljs-params">()</span> </span>&#123;<br>        System.out.println(company+<span class="hljs-string">&quot;===&quot;</span>+age);<br>        System.out.println(strList);<br>        System.out.println(userList);<br>        System.out.println(userMap);<br>        System.out.println(properties);<br>        System.out.println(<span class="hljs-string">&quot;UserDao save method running....&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;userDao&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;com.itheima.dao.impl.UserDaoImpl&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;company&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;传智播客&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">property</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;age&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;15&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">property</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;strList&quot;</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">list</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">value</span>&gt;</span>aaa<span class="hljs-tag">&lt;/<span class="hljs-name">value</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">value</span>&gt;</span>bbb<span class="hljs-tag">&lt;/<span class="hljs-name">value</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">value</span>&gt;</span>ccc<span class="hljs-tag">&lt;/<span class="hljs-name">value</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">list</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">property</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;userList&quot;</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">list</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;com.itheima.domain.User&quot;</span>/&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;com.itheima.domain.User&quot;</span>/&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">ref</span> <span class="hljs-attr">bean</span>=<span class="hljs-string">&quot;u1&quot;</span>/&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">ref</span> <span class="hljs-attr">bean</span>=<span class="hljs-string">&quot;u2&quot;</span>/&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">list</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">property</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;userMap&quot;</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">map</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">entry</span> <span class="hljs-attr">key</span>=<span class="hljs-string">&quot;user1&quot;</span> <span class="hljs-attr">value-ref</span>=<span class="hljs-string">&quot;u1&quot;</span>/&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">entry</span> <span class="hljs-attr">key</span>=<span class="hljs-string">&quot;user2&quot;</span> <span class="hljs-attr">value-ref</span>=<span class="hljs-string">&quot;u2&quot;</span>/&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">map</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">property</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;properties&quot;</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">props</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">prop</span> <span class="hljs-attr">key</span>=<span class="hljs-string">&quot;p1&quot;</span>&gt;</span>aaa<span class="hljs-tag">&lt;/<span class="hljs-name">prop</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">prop</span> <span class="hljs-attr">key</span>=<span class="hljs-string">&quot;p2&quot;</span>&gt;</span>bbb<span class="hljs-tag">&lt;/<span class="hljs-name">prop</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">prop</span> <span class="hljs-attr">key</span>=<span class="hljs-string">&quot;p3&quot;</span>&gt;</span>ccc<span class="hljs-tag">&lt;/<span class="hljs-name">prop</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">props</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">property</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+
+
+<h5 id="2-2-6-5-引入其他配置文件（分模块开发）"><a href="#2-2-6-5-引入其他配置文件（分模块开发）" class="headerlink" title="2.2.6.5 引入其他配置文件（分模块开发）"></a>2.2.6.5 引入其他配置文件（分模块开发）</h5><p>实际开发中，Spring的配置内容非常多，这就导致Spring配置很繁杂且体积很大，所以，可以将部分配置拆解到其他配置文件中，而在Spring主配置文件通过import标签进行加载</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">import</span> <span class="hljs-attr">resource</span>=<span class="hljs-string">&quot;applicationContext-xxx.xml&quot;</span>/&gt;</span><br></code></pre></td></tr></table></figure>
+
+
+
+
+
+<h3 id="2-3-Spring-相关-API"><a href="#2-3-Spring-相关-API" class="headerlink" title="2.3 Spring 相关 API"></a>2.3 Spring 相关 API</h3><h4 id="2-3-1-ApplicationContext的继承体系"><a href="#2-3-1-ApplicationContext的继承体系" class="headerlink" title="2.3.1 ApplicationContext的继承体系"></a>2.3.1 ApplicationContext的继承体系</h4><p><strong>applicationContext</strong>：接口类型，代表应用上下文，可以通过其实例获得 Spring 容器中的 Bean 对象</p>
+<p><img src="https://cdn.jsdelivr.net/gh/LihengXu/mycdn/img/SSM-7-20210628.png" srcset="/img/loading.gif"></p>
+<h4 id="2-3-2-ApplicationContext的实现类"><a href="#2-3-2-ApplicationContext的实现类" class="headerlink" title="2.3.2 ApplicationContext的实现类"></a>2.3.2 ApplicationContext的实现类</h4><p>我们主要关心其中三个</p>
+<ol>
+<li><p><strong>ClassPathXmlApplicationContext</strong> </p>
+<p>它是从类的根路径下加载配置文件 推荐使用这种</p>
+</li>
+<li><p><strong>FileSystemXmlApplicationContext</strong></p>
+<p>它是从磁盘路径上加载配置文件，配置文件可以在磁盘的任意位置</p>
+</li>
+<li><p><strong>AnnotationConfigApplicationContext</strong></p>
+<p>当使用注解配置容器对象时，需要使用此类来创建 spring 容器。它用来读取注解。</p>
+</li>
+</ol>
+<h4 id="2-3-3-getBean-方法使用"><a href="#2-3-3-getBean-方法使用" class="headerlink" title="2.3.3 getBean() 方法使用"></a>2.3.3 getBean() 方法使用</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> Object <span class="hljs-title">getBean</span><span class="hljs-params">(String name)</span> <span class="hljs-keyword">throws</span> BeansException </span>&#123;<br>    assertBeanFactoryActive();<br>    <span class="hljs-keyword">return</span> getBeanFactory().getBean(name);<br>&#125;<br><br><span class="hljs-keyword">public</span> &lt;T&gt; <span class="hljs-function">T <span class="hljs-title">getBean</span><span class="hljs-params">(Class&lt;T&gt; requiredType)</span> <span class="hljs-keyword">throws</span> BeansException </span>&#123;<br>    assertBeanFactoryActive();<br>    <span class="hljs-keyword">return</span> getBeanFactory().getBean(requiredType);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><p>当参数的数据类型是字符串时，表示根据Bean的id从容器中获得Bean实例，返回是Object，需要强转。</p>
+</li>
+<li><p>当参数的数据类型是Class类型时，表示根据类型从容器中匹配Bean实例，当容器中相同类型的Bean有多个时，则此方法会报错。</p>
+</li>
+</ul>
+<p>示例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java">ApplicationContext applicationContext = <span class="hljs-keyword">new</span> <br>            ClassPathXmlApplicationContext(<span class="hljs-string">&quot;applicationContext.xml&quot;</span>);<br>UserService userService1 = (UserService) applicationContext.getBean(<span class="hljs-string">&quot;userService&quot;</span>);<br>UserService userService2 = applicationContext.getBean(UserService.class);<br></code></pre></td></tr></table></figure>
+
+
+
+<h4 id="2-3-4-要点总结"><a href="#2-3-4-要点总结" class="headerlink" title="2.3.4 要点总结"></a>2.3.4 要点总结</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java">ApplicationContext app = <span class="hljs-keyword">new</span> ClasspathXmlApplicationContext(<span class="hljs-string">&quot;xml文件&quot;</span>)<br>app.getBean(<span class="hljs-string">&quot;id&quot;</span>)<br>app.getBean(Class)<br></code></pre></td></tr></table></figure>
+
+
+
+
+
+<h3 id="2-4-Spring-配置数据源（配置文件方式）"><a href="#2-4-Spring-配置数据源（配置文件方式）" class="headerlink" title="2.4 Spring 配置数据源（配置文件方式）"></a>2.4 Spring 配置数据源（配置文件方式）</h3>
             </div>
             <hr>
             <div>
