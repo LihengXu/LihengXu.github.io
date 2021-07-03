@@ -199,7 +199,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      4.9k 字
+      7.8k 字
     </span>
   
 
@@ -209,7 +209,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      89
+      137
        分钟
     </span>
   
@@ -599,9 +599,186 @@
 <p>@Bean （把第三方 jar 包中定义的类加入到 Spring 容器中）</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Bean(name=&quot;dataSource&quot;)</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> DataSource <span class="hljs-title">getDataSource</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> PropertyVetoException </span>&#123;<br>    ComboPooledDataSource dataSource = <span class="hljs-keyword">new</span> ComboPooledDataSource();<br>    dataSource.setDriverClass(driver);<br>    dataSource.setJdbcUrl(url);<br>    dataSource.setUser(username);<br>    dataSource.setPassword(password);<br>    <span class="hljs-keyword">return</span> dataSource;<br>&#125; <br></code></pre></td></tr></table></figure></li>
 <li><p>注解开发的 API ：测试加载核心配置类创建Spring容器</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Test</span><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">testAnnoConfiguration</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;<br>    ApplicationContext applicationContext = <span class="hljs-keyword">new</span> <br>          AnnotationConfigApplicationContext(SpringConfiguration.class);<br>    UserService userService = (UserService)    <br>    applicationContext.getBean(<span class="hljs-string">&quot;userService&quot;</span>);<br>    userService.save();<br>    DataSource dataSource = (DataSource) <br>    applicationContext.getBean(<span class="hljs-string">&quot;dataSource&quot;</span>);<br>    Connection connection = dataSource.getConnection();<br>    System.out.println(connection);<br>&#125;<br></code></pre></td></tr></table></figure></li>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Test</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">testAnnoConfiguration</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;<br>    ApplicationContext applicationContext = <span class="hljs-keyword">new</span> <br>          AnnotationConfigApplicationContext(SpringConfiguration.class);<br>    UserService userService = (UserService)    <br>    applicationContext.getBean(<span class="hljs-string">&quot;userService&quot;</span>);<br>    userService.save();<br>    DataSource dataSource = (DataSource) <br>    applicationContext.getBean(<span class="hljs-string">&quot;dataSource&quot;</span>);<br>    Connection connection = dataSource.getConnection();<br>    System.out.println(connection);<br>&#125;<br></code></pre></td></tr></table></figure></li>
 </ul>
-<h3 id="2-6-Spring-集成-Junit"><a href="#2-6-Spring-集成-Junit" class="headerlink" title="2.6 Spring 集成 Junit"></a>2.6 Spring 集成 Junit</h3>
+<h3 id="2-6-Spring-集成-Junit"><a href="#2-6-Spring-集成-Junit" class="headerlink" title="2.6 Spring 集成 Junit"></a>2.6 Spring 集成 Junit</h3><h4 id="2-6-1-集成的理由"><a href="#2-6-1-集成的理由" class="headerlink" title="2.6.1 集成的理由"></a>2.6.1 集成的理由</h4><p>可以利用 Spring 提前统一的加载容器，并利用 Spring 完成依赖注入，再进行测试</p>
+<p>不需要给每一个 @Test 测试方法都载入一次配置文件，加载一次容器</p>
+<h4 id="2-6-2-Spring-集成-Junit-步骤"><a href="#2-6-2-Spring-集成-Junit-步骤" class="headerlink" title="2.6.2 Spring 集成 Junit 步骤"></a>2.6.2 Spring 集成 Junit 步骤</h4><p>① 导入spring集成Junit的坐标</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-test<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>5.0.2.RELEASE<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br><br><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>junit<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>junit<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>4.12<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">scope</span>&gt;</span>test<span class="hljs-tag">&lt;/<span class="hljs-name">scope</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>② 使用@Runwith 注解替换原来的运行期</p>
+<p>以前是使用 Junit 完成测试，现在是向先运行 Spring 加载容器，Spring再去找 Junit 进行测试</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@RunWith(SpringJUnit4ClassRunner.class)</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SpringJunitTest</span> </span>&#123;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>③ 使用@ContextConfiguration 指定配置文件或配置类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@RunWith(SpringJUnit4ClassRunner.class)</span><br><span class="hljs-comment">//加载spring核心配置文件</span><br><span class="hljs-comment">//@ContextConfiguration(value = &#123;&quot;classpath:applicationContext.xml&quot;&#125;)</span><br><span class="hljs-comment">//加载spring核心配置类</span><br><span class="hljs-meta">@ContextConfiguration(classes = &#123;SpringConfiguration.class&#125;)</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SpringJunitTest</span> </span>&#123;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>④ 使用@Autowired 注入需要测试的对象</p>
+<p>⑤ 创建测试方法进行测试</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@RunWith(SpringJUnit4ClassRunner.class)</span><br><span class="hljs-meta">@ContextConfiguration(classes = &#123;SpringConfiguration.class&#125;)</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SpringJunitTest</span> </span>&#123;<br>    <span class="hljs-meta">@Autowired</span><br>    <span class="hljs-keyword">private</span> UserService userService;<br>    <span class="hljs-meta">@Test</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">testUserService</span><span class="hljs-params">()</span></span>&#123;<br>        userService.save();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="3-SpringMVC"><a href="#3-SpringMVC" class="headerlink" title="3. SpringMVC"></a>3. SpringMVC</h2><h3 id="3-1-Spring-集成-web-环境"><a href="#3-1-Spring-集成-web-环境" class="headerlink" title="3.1 Spring 集成 web 环境"></a>3.1 Spring 集成 web 环境</h3><h4 id="3-1-1-ApplicationContext-应用上下文获取方式"><a href="#3-1-1-ApplicationContext-应用上下文获取方式" class="headerlink" title="3.1.1  ApplicationContext 应用上下文获取方式"></a>3.1.1  ApplicationContext 应用上下文获取方式</h4><p>应用上下文对象是通过<strong>new</strong> <strong>ClasspathXmlApplicationContext</strong> (spring 配置文件) 方式获取的，但是每次从容器中获得Bean时都要编写<strong>new ClasspathXmlApplicationContext</strong> (spring配置文件) ，这样的弊端是配置文件加载多次，应用上下文对象创建多次。</p>
+<p>在Web项目中，可以使用 <strong>ServletContextListener</strong> 监听Web应用的启动，我们可以在Web应用启动时，就加载Spring的配置文件，创建应用上下文对象<strong>ApplicationContext</strong>，在将其存储到最大的域<strong>servletContext</strong>域中，这样就可以在任意位置从域中获得应用上下文<strong>ApplicationContext</strong>对象了。</p>
+<h4 id="3-1-2-Spring-提供获取应用上下文的工具"><a href="#3-1-2-Spring-提供获取应用上下文的工具" class="headerlink" title="3.1.2 Spring 提供获取应用上下文的工具"></a>3.1.2 Spring 提供获取应用上下文的工具</h4><p>(关于这一段如果不能太理解，或者遗忘了看<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1WZ4y1P7Bp?p=39">视频p39 p40</a>回顾比较快)</p>
+<p>上面提到的使用监听器监听Web应用启动在启动过程中加载Spring配置文件的功能不需要手动实现，Spring提供了一个监听器<strong>ContextLoaderListener</strong>就是对上述功能的封装，该监听器内部加载Spring配置文件，创建应用上下文对象，并存储到<strong>ServletContext</strong>域中，提供了一个客户端工具<strong>WebApplicationContextUtils</strong>供使用者获得应用上下文对象。</p>
+<p>所以我们需要做的只有两件事：</p>
+<p>①在<strong>web.xml</strong>中配置<strong>ContextLoaderListener</strong>监听器（导入spring-web坐标）</p>
+<p>导入坐标</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-web<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>5.0.5.RELEASE<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>配置web.xml</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!--全局参数--&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">context-param</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">param-name</span>&gt;</span>contextConfigLocation<span class="hljs-tag">&lt;/<span class="hljs-name">param-name</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">param-value</span>&gt;</span>classpath:applicationContext.xml<span class="hljs-tag">&lt;/<span class="hljs-name">param-value</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">context-param</span>&gt;</span><br><span class="hljs-comment">&lt;!--Spring的监听器--&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">listener</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">listener-class</span>&gt;</span><br>       org.springframework.web.context.ContextLoaderListener<br>   <span class="hljs-tag">&lt;/<span class="hljs-name">listener-class</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">listener</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>②使用<strong>WebApplicationContextUtils</strong>获得应用上下文对象<strong>ApplicationContext</strong></p>
+<p>使用工具类回去上下文对象</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java">ApplicationContext applicationContext =    <br>    WebApplicationContextUtils.getWebApplicationContext(servletContext);<br>Object obj = applicationContext.getBean(<span class="hljs-string">&quot;id&quot;</span>);<br></code></pre></td></tr></table></figure>
+
+
+
+
+
+<h3 id="3-2-SpringMVC-简介"><a href="#3-2-SpringMVC-简介" class="headerlink" title="3.2 SpringMVC 简介"></a>3.2 SpringMVC 简介</h3><h4 id="3-2-1-SpringMVC-概述"><a href="#3-2-1-SpringMVC-概述" class="headerlink" title="3.2.1 SpringMVC 概述"></a>3.2.1 SpringMVC 概述</h4><p><strong>SpringMVC</strong> 是一种基于 Java 的实现 <strong>MVC</strong> <strong>设计模型</strong>的请求驱动类型的轻量级 <strong>Web</strong> <strong>框架</strong>，属于<strong>SpringFrameWork</strong> 的后续产品，已经融合在 Spring Web Flow 中。</p>
+<p>SpringMVC 已经成为目前最主流的MVC框架之一，并且随着Spring3.0 的发布，全面超越 Struts2，成为最优秀的 MVC 框架。它通过一套<strong>注解</strong>，让一个简单的 Java 类成为处理请求的控制器，而无须实现任何接口。同时它还支持 <strong>RESTful</strong> 编程风格的请求。</p>
+<p><strong>SpringMVC雏形分析：</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/LihengXu/mycdn/img/SSM-10-20210704.png" srcset="/img/loading.gif"></p>
+<ul>
+<li>POJO：就是一个普通的 JavaBean</li>
+<li>前端控制器（web框架基本都有）：不同框架实现原理不一样<ul>
+<li>SpringMVC 中 前端控制器是 servlet</li>
+<li>Struts2 中前端控制器是 fliter</li>
+</ul>
+</li>
+</ul>
+<h4 id="3-2-2-SpringMVC快速入门"><a href="#3-2-2-SpringMVC快速入门" class="headerlink" title="3.2.2 SpringMVC快速入门"></a>3.2.2 SpringMVC快速入门</h4><p><strong>开发步骤：</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/LihengXu/mycdn/img/SSM-11-20210704.png" srcset="/img/loading.gif"></p>
+<p>需求：客户端发起请求，服务器端接收请求，执行逻辑并进行视图跳转。</p>
+<p>开发步骤：</p>
+<p>①导入SpringMVC相关坐标</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!--Spring坐标--&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-context<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>5.0.5.RELEASE<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br><span class="hljs-comment">&lt;!--SpringMVC坐标--&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-webmvc<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>5.0.5.RELEASE<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br><span class="hljs-comment">&lt;!--Servlet坐标--&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>javax.servlet<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>servlet-api<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>2.5<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br><span class="hljs-comment">&lt;!--Jsp坐标--&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>javax.servlet.jsp<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>jsp-api<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>2.0<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>②<font color=#FF0000><strong>配置SpringMVC核心控制器DispathcerServlet</strong></font></p>
+<p>在web.xml中配置前端控制器</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!-- 配置前端控制器 --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">servlet</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">servlet-name</span>&gt;</span>DispatcherServlet<span class="hljs-tag">&lt;/<span class="hljs-name">servlet-name</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">servlet-class</span>&gt;</span>org.springframework.web.servlet.DispatcherServlet<span class="hljs-tag">&lt;/<span class="hljs-name">servlet-class</span>&gt;</span><br>    <span class="hljs-comment">&lt;!-- 告诉前端控制器springmvc配置文件在哪 --&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">init-param</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">param-name</span>&gt;</span>contextConfigLocation<span class="hljs-tag">&lt;/<span class="hljs-name">param-name</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">param-value</span>&gt;</span>classpath:spring-mvc.xml<span class="hljs-tag">&lt;/<span class="hljs-name">param-value</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">init-param</span>&gt;</span><br>    <span class="hljs-comment">&lt;!-- load-on-startup表示服务启动就加载，不配就是访问时才创建 --&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">load-on-startup</span>&gt;</span>1<span class="hljs-tag">&lt;/<span class="hljs-name">load-on-startup</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">servlet</span>&gt;</span><br><br><span class="hljs-comment">&lt;!-- 配置映射地址 --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">servlet-mapping</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">servlet-name</span>&gt;</span>DispatcherServlet<span class="hljs-tag">&lt;/<span class="hljs-name">servlet-name</span>&gt;</span><br>    <span class="hljs-comment">&lt;!-- 表示每次访问，任何请求都要走这个servlet --&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">url-pattern</span>&gt;</span>/<span class="hljs-tag">&lt;/<span class="hljs-name">url-pattern</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">servlet-mapping</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>③创建Controller类和视图页面</p>
+<p>创建Controller和业务方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">QuickController</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">quickMethod</span><span class="hljs-params">()</span></span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;quickMethod running.....&quot;</span>);<br>        <span class="hljs-comment">// 省略了 .jsp, 主要见后面提到的视图前后缀配置，配置后会自动凭借.jsp的后缀 </span><br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;index&quot;</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>创建视图页面 index.jsp</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs jsp">&lt;html&gt;<br>    &lt;body&gt;<br>        &lt;h2&gt;Hello SpringMVC!&lt;/h2&gt;<br>    &lt;/body&gt;<br>&lt;/html&gt;<br></code></pre></td></tr></table></figure>
+
+<p>④使用注解配置Controller类中业务方法的映射地址</p>
+<p>使用@Controller 放入容器</p>
+<p>使用@RequestMapping ，配置请求地址和方法的映射关系</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Controller</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">QuickController</span> </span>&#123;<br>    <span class="hljs-meta">@RequestMapping(&quot;/quick&quot;)</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">quickMethod</span><span class="hljs-params">()</span></span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;quickMethod running.....&quot;</span>);<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;index&quot;</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>⑤配置SpringMVC核心文件 spring-mvc.xml</p>
+<p>创建spring-mvc.xml</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">beans</span> <span class="hljs-attr">xmlns</span>=<span class="hljs-string">&quot;http://www.springframework.org/schema/beans&quot;</span></span><br><span class="hljs-tag">       <span class="hljs-attr">xmlns:mvc</span>=<span class="hljs-string">&quot;http://www.springframework.org/schema/mvc&quot;</span></span><br><span class="hljs-tag">       <span class="hljs-attr">xmlns:context</span>=<span class="hljs-string">&quot;http://www.springframework.org/schema/context&quot;</span></span><br><span class="hljs-tag">       <span class="hljs-attr">xmlns:xsi</span>=<span class="hljs-string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span><br><span class="hljs-tag">       <span class="hljs-attr">xsi:schemaLocation</span>=<span class="hljs-string">&quot;http://www.springframework.org/schema/beans</span></span><br><span class="hljs-tag"><span class="hljs-string">                           http://www.springframework.org/schema/beans/spring-beans.xsd</span></span><br><span class="hljs-tag"><span class="hljs-string">                           http://www.springframework.org/schema/mvc</span></span><br><span class="hljs-tag"><span class="hljs-string">                           http://www.springframework.org/schema/mvc/spring-mvc.xsd</span></span><br><span class="hljs-tag"><span class="hljs-string">                           http://www.springframework.org/schema/context</span></span><br><span class="hljs-tag"><span class="hljs-string">                           http://www.springframework.org/schema/context/spring-context.xsd&quot;</span>&gt;</span><br>    <span class="hljs-comment">&lt;!--配置注解扫描--&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">context:component-scan</span> <span class="hljs-attr">base-package</span>=<span class="hljs-string">&quot;com.itheima.controller&quot;</span>/&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">beans</span>&gt;</span><br><br></code></pre></td></tr></table></figure>
+
+
+
+<p>⑥客户端发起请求测试</p>
+<p>访问测试地址：<a target="_blank" rel="noopener" href="http://localhost:8080/itheima_springmvc1/quick">http://localhost:8080/itheima_springmvc1/quick</a></p>
+<p><strong>流程图示总结：</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/LihengXu/mycdn/img/SSM-12-20210704.png" srcset="/img/loading.gif"></p>
+<h4 id="3-2-3-SpringMVC-组件解析"><a href="#3-2-3-SpringMVC-组件解析" class="headerlink" title="3.2.3 SpringMVC 组件解析"></a>3.2.3 SpringMVC 组件解析</h4><ul>
+<li><strong>SpringMVC 的执行流程</strong></li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/LihengXu/mycdn/img/SSM-13-20210704.png" srcset="/img/loading.gif"></p>
+<p>①用户发送请求至前端控制器DispatcherServlet。</p>
+<p>②DispatcherServlet收到请求调用HandlerMapping处理器映射器。</p>
+<p>③处理器映射器找到具体的处理器(可以根据xml配置、注解进行查找)，生成处理器对象及处理器拦截器(如果有则生成)一并返回给DispatcherServlet。</p>
+<p>④DispatcherServlet调用HandlerAdapter处理器适配器。</p>
+<p>⑤HandlerAdapter经过适配调用具体的处理器(Controller，也叫后端控制器)。</p>
+<p>⑥Controller执行完成返回ModelAndView。</p>
+<p>⑦HandlerAdapter将controller执行结果ModelAndView返回给DispatcherServlet。</p>
+<p>⑧DispatcherServlet将ModelAndView传给ViewReslover视图解析器。</p>
+<p>⑨ViewReslover解析后返回具体View。</p>
+<p>⑩DispatcherServlet根据View进行渲染视图（即将模型数据填充至视图中），DispatcherServlet响应用户。</p>
+<ul>
+<li><p><strong>各个组件解析</strong></p>
+<ul>
+<li> 前端控制器：<font color=#FF0000><strong>DispatcherServlet</strong></font></li>
+</ul>
+<p>  用户请求到达前端控制器，它就相当于 <strong>MVC</strong> 模式中的 <strong>C</strong>，DispatcherServlet 是整个流程控制的中心，由它调用其它组件处理用户的请求，DispatcherServlet 的存在降低了组件之间的耦合性。</p>
+<ul>
+<li><p>处理器映射器：<strong>HandlerMapping</strong><br>HandlerMapping 负责根据用户请求找到 Handler 即处理器，SpringMVC 提供了不同的映射器实现不同的映射方式，例如：配置文件方式，实现接口方式，注解方式等。</p>
+</li>
+<li><p>处理器适配器：<strong>HandlerAdapter</strong><br>通过 HandlerAdapter 对处理器进行执行，这是<strong>适配器模式</strong>的应用，通过扩展适配器可以对更多类型的处理器进行执行</p>
+</li>
+<li><p>处理器：<strong>Handler</strong></p>
+<p>它就是我们开发中要编写的具体业务控制器。由 DispatcherServlet 把用户请求转发到 Handler。由Handler 对具体的用户请求进行处理。</p>
+</li>
+<li><p>视图解析器： <strong>View Resolver</strong> </p>
+<p>View Resolver 负责将处理结果生成 View 视图，View Resolver 首先根据逻辑视图名解析成物理视图名，即具体的页面地址，再生成 View 视图对象，最后对 View 进行渲染将处理结果通过页面展示给用户。</p>
+</li>
+<li><p>视图：<strong>View</strong> </p>
+<p>SpringMVC 框架提供了很多的 View 视图类型的支持，包括：jstlView、freemarkerView、pdfView等，最常用的视图就是 jsp。一般情况下需要通过页面标签或页面模版技术将模型数据通过页面展示给用户，需要由程序员根据业务需求开发具体的页面</p>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p><strong>注解解析</strong></p>
+<ul>
+<li><p>@Controller （前面学过，就是和 @Component 作用相同）</p>
+</li>
+<li><p><font color=#FF0000><strong>@RequestMapping</strong></font></p>
+<p>作用：用于建立请求 URL 和处理请求方法之间的对应关系</p>
+<p>位置：</p>
+<ul>
+<li><p>类上，请求URL 的第一级访问目录。此处不写的话，就相当于应用的根目录</p>
+</li>
+<li><p>方法上，请求 URL 的第二级访问目录，与类上的使用@ReqquestMapping标注的一级目录一起<strong>拼接组成</strong>访问虚拟路径</p>
+</li>
+</ul>
+<p>属性：</p>
+<ul>
+<li><p><strong>value</strong>：用于指定请求的URL。它和path属性的作用是一样的</p>
+</li>
+<li><p><strong>method</strong>：用于指定请求的方式（RequestMethod.POST，RequestMethod.get等）</p>
+</li>
+<li><p><strong>params</strong>：用于指定限制请求参数的条件。它支持简单的表达式。要求请求参数的key和value必须和配置的一模一样</p>
+</li>
+</ul>
+<p>例如：</p>
+<ul>
+<li><p>**params = {“accountName”}**，表示请求参数必须有accountName</p>
+</li>
+<li><p>**params = {“moeny!100”}**，表示请求参数中money不能是100</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p><strong>XML 配置解析</strong></p>
+<ul>
+<li><p><strong>mvc 命名空间引入</strong></p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs awk">命名空间：<br>xmlns:context=<span class="hljs-string">&quot;http://www.springframework.org/schema/context&quot;</span><br>xmlns:mvc=<span class="hljs-string">&quot;http://www.springframework.org/schema/mvc&quot;</span><br>约束地址：<br>http:<span class="hljs-regexp">//</span>www.springframework.org<span class="hljs-regexp">/schema/</span>context<br>http:<span class="hljs-regexp">//</span>www.springframework.org<span class="hljs-regexp">/schema/</span>context/spring-context.xsd<br>http:<span class="hljs-regexp">//</span>www.springframework.org<span class="hljs-regexp">/schema/m</span>vc http:<span class="hljs-regexp">//</span>www.springframework.org<span class="hljs-regexp">/schema/m</span>vc/spring-mvc.xsd<br></code></pre></td></tr></table></figure></li>
+<li><p><strong>组件扫描</strong></p>
+<p>SpringMVC基于Spring容器，所以在进行SpringMVC操作时，需要将Controller存储到Spring容器中，如果使用@Controller注解标注的话，就需要使用</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">context:component-scan</span> <span class="hljs-attr">base-package</span>=<span class="hljs-string">“com.itheima.controller</span>&quot;/&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>进行组件扫描。</p>
+</li>
+<li><p><strong>视图解析器</strong></p>
+<p>SpringMVC有默认组件配置，默认组件都是 <strong>DispatcherServlet.properties</strong> 配置文件中配置的，该配置文件地址: <strong>org/springframework/web/servlet/DispatcherServlet.properties</strong>，该文件中配置了默认的视图解析器，如下：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs stylus">org<span class="hljs-selector-class">.springframework</span><span class="hljs-selector-class">.web</span><span class="hljs-selector-class">.servlet</span><span class="hljs-selector-class">.ViewResolver</span> = org<span class="hljs-selector-class">.springframework</span><span class="hljs-selector-class">.web</span><span class="hljs-selector-class">.servlet</span><span class="hljs-selector-class">.view</span>.InternalResourceViewResolver<br></code></pre></td></tr></table></figure>
+
+<p>翻看该解析器源码，可以看到该解析器的默认设置，如下:</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs xml">REDIRECT_URL_PREFIX = &quot;redirect:&quot;  --重定向前缀<br>FORWARD_URL_PREFIX = &quot;forward:&quot;    --转发前缀（默认值）<br>prefix = &quot;&quot;;     --视图名称前缀<br>suffix = &quot;&quot;;     --视图名称后缀<br></code></pre></td></tr></table></figure>
+
+<p>我们可以通过属性注入的方式修改视图的前后缀</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!--配置内部资源视图解析器--&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;org.springframework.web.servlet.view.InternalResourceViewResolver&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;prefix&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;/WEB-INF/views/&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">property</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;suffix&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;.jsp&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">property</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span><br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+
             </div>
             <hr>
             <div>
