@@ -199,7 +199,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      16.4k 字
+      18.1k 字
     </span>
   
 
@@ -209,7 +209,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      286
+      315
        分钟
     </span>
   
@@ -1346,7 +1346,130 @@
 <ul>
 <li>通知注解类型：前置通知、后置通知、环绕通知、异常抛出通知、最终通知</li>
 </ul>
-<h2 id="6-Spring-声明式事务控制"><a href="#6-Spring-声明式事务控制" class="headerlink" title="6. Spring 声明式事务控制"></a>6. Spring 声明式事务控制</h2><h2 id="实战练习："><a href="#实战练习：" class="headerlink" title="实战练习："></a>实战练习：</h2><ul>
+<h2 id="6-Spring-声明式事务控制"><a href="#6-Spring-声明式事务控制" class="headerlink" title="6. Spring 声明式事务控制"></a>6. Spring 声明式事务控制</h2><p>需要理解编程式事务控制和申明式事务控制的区别</p>
+<h3 id="6-1-编程式事务控制相关对象"><a href="#6-1-编程式事务控制相关对象" class="headerlink" title="6.1 编程式事务控制相关对象"></a>6.1 编程式事务控制相关对象</h3><h4 id="6-1-1-PlatformTransactionManager（了解）"><a href="#6-1-1-PlatformTransactionManager（了解）" class="headerlink" title="6.1.1 PlatformTransactionManager（了解）"></a>6.1.1 PlatformTransactionManager（了解）</h4><p>PlatformTransactionManager 接口是 spring 的事务管理器，它里面提供了我们常用的操作事务的方法。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/LihengXu/mycdn/img/SSM-29-20210713.png" srcset="/img/loading.gif"></p>
+<p><strong>注意：</strong></p>
+<p>PlatformTransactionManager 是接口类型，不同的 Dao 层技术则有不同的实现类，例如：Dao 层技术是jdbc 或 mybatis 时：org.springframework.jdbc.datasource.DataSourceTransactionManager</p>
+<p>Dao 层技术是hibernate时：org.springframework.orm.hibernate5.HibernateTransactionManager</p>
+<h4 id="6-1-2-TransactionDefinition"><a href="#6-1-2-TransactionDefinition" class="headerlink" title="6.1.2 TransactionDefinition"></a>6.1.2 TransactionDefinition</h4><p>TransactionDefinition 是事务的定义信息对象，里面有如下方法：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/LihengXu/mycdn/img/SSM-30-20210713.png" srcset="/img/loading.gif"></p>
+<ul>
+<li>事务的隔离级别：设置隔离级别，可以解决事务并发产生的问题，如脏读、不可重复读和虚读<ul>
+<li>ISOLATION_DEFAULT</li>
+<li>ISOLATION_READ_UNCOMMITTED</li>
+<li>ISOLATION_READ_COMMITTED</li>
+<li>ISOLATION_REPEATABLE_READ</li>
+<li>ISOLATION_SERIALIZABLE</li>
+</ul>
+</li>
+<li>事务传播行为：解决业务方法在调用业务方法时，他们之间的事务统一性问题<ul>
+<li><font color=#FF0000>REQUIRED：如果当前没有事务，就新建一个事务，如果已经存在一个事务中，加入到这个事务中。一般的选择（默认值）</font></li>
+<li><font color=#FF0000>SUPPORTS：支持当前事务，如果当前没有事务，就以非事务方式执行（没有事务）</font></li>
+<li>MANDATORY：使用当前的事务，如果当前没有事务，就抛出异常</li>
+<li>REQUERS_NEW：新建事务，如果当前在事务中，把当前事务挂起。</li>
+<li>NOT_SUPPORTED：以非事务方式执行操作，如果当前存在事务，就把当前事务挂起</li>
+<li>NEVER：以非事务方式运行，如果当前存在事务，抛出异常</li>
+<li>NESTED：如果当前存在事务，则在嵌套事务内执行。如果当前没有事务，则执行 REQUIRED 类似的操作</li>
+<li>超时时间：默认值是-1，没有超时限制。如果有，以秒为单位进行设置</li>
+<li>是否只读：建议查询时设置为只读</li>
+</ul>
+</li>
+</ul>
+<h4 id="6-1-3-TransactionStatus"><a href="#6-1-3-TransactionStatus" class="headerlink" title="6.1.3 TransactionStatus"></a>6.1.3 TransactionStatus</h4><p>TransactionStatus 接口提供的是事务具体的运行状态，方法介绍如下。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/LihengXu/mycdn/img/SSM-31-20210713.png" srcset="/img/loading.gif"></p>
+<h4 id="6-1-4-要点总结"><a href="#6-1-4-要点总结" class="headerlink" title="6.1.4 要点总结"></a>6.1.4 要点总结</h4><p>编程式事务控制三大对象</p>
+<ul>
+<li><p>PlatformTransactionManager：接口，指定事务控制行为</p>
+</li>
+<li><p>TransactionDefinition：封装事务参数，需要配置</p>
+</li>
+<li><p>TransactionStatus：被动的封装事务状态信息的，不需要配置</p>
+</li>
+</ul>
+<h3 id="6-2-基于-XML-的声明式事务控制"><a href="#6-2-基于-XML-的声明式事务控制" class="headerlink" title="6.2 基于 XML 的声明式事务控制"></a>6.2 基于 XML 的声明式事务控制</h3><h4 id="6-2-1-什么是声明式事务控制"><a href="#6-2-1-什么是声明式事务控制" class="headerlink" title="6.2.1 什么是声明式事务控制"></a>6.2.1 什么是声明式事务控制</h4><p>Spring 的声明式事务顾名思义就是<font color=#FF0000>采用声明的方式来处理事务</font>。这里所说的声明，就是指在配置文件中声明，用在 Spring 配置文件中声明式的处理事务来代替代码式的处理事务。</p>
+<p><strong>作用：</strong></p>
+<ul>
+<li>事务管理不侵入开发的组件。具体来说，业务逻辑对象就不会意识到正在事务管理之中，事实上也应该如此，因为事务管理是属于系统层面的服务，而不是业务逻辑的一部分，如果想要改变事务管理策划的话，也只需要在定义文件中重新配置即可</li>
+<li>在不需要事务管理的时候，只要在设定文件上修改一下，即可移去事务管理服务，无需改变代码重新编译，这样维护起来极其方便</li>
+</ul>
+<p><font color=#FF0000>Spring 声明式事务控制底层就是AOP</font></p>
+<h4 id="6-2-2-声明式事务控制的实现"><a href="#6-2-2-声明式事务控制的实现" class="headerlink" title="6.2.2 声明式事务控制的实现"></a>6.2.2 声明式事务控制的实现</h4><p>声明式事务控制明确事项：</p>
+<ul>
+<li><p>谁是切点？</p>
+</li>
+<li><p>谁是通知？</p>
+</li>
+<li><p>配置切面？</p>
+</li>
+</ul>
+<p>①引入tx命名空间</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">beans</span> <span class="hljs-attr">xmlns</span>=<span class="hljs-string">&quot;http://www.springframework.org/schema/beans&quot;</span></span><br><span class="hljs-tag">       <span class="hljs-attr">xmlns:xsi</span>=<span class="hljs-string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span><br><span class="hljs-tag">       <span class="hljs-attr">xmlns:context</span>=<span class="hljs-string">&quot;http://www.springframework.org/schema/context&quot;</span></span><br><span class="hljs-tag">       <span class="hljs-attr">xmlns:aop</span>=<span class="hljs-string">&quot;http://www.springframework.org/schema/aop&quot;</span></span><br><span class="hljs-tag">       <span class="hljs-attr">xmlns:tx</span>=<span class="hljs-string">&quot;http://www.springframework.org/schema/tx&quot;</span></span><br><span class="hljs-tag">       <span class="hljs-attr">xsi:schemaLocation</span>=<span class="hljs-string">&quot;</span></span><br><span class="hljs-tag"><span class="hljs-string">                           http://www.springframework.org/schema/context</span></span><br><span class="hljs-tag"><span class="hljs-string">                           http://www.springframework.org/schema/context/spring-context.xsd</span></span><br><span class="hljs-tag"><span class="hljs-string">                           http://www.springframework.org/schema/aop</span></span><br><span class="hljs-tag"><span class="hljs-string">                           http://www.springframework.org/schema/aop/spring-aop.xsd</span></span><br><span class="hljs-tag"><span class="hljs-string">                           http://www.springframework.org/schema/tx</span></span><br><span class="hljs-tag"><span class="hljs-string">                           http://www.springframework.org/schema/tx/spring-tx.xsd</span></span><br><span class="hljs-tag"><span class="hljs-string">                           http://www.springframework.org/schema/beans</span></span><br><span class="hljs-tag"><span class="hljs-string">                           http://www.springframework.org/schema/beans/spring-beans.xsd&quot;</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>②配置事务增强</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!--平台事务管理器--&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;transactionManager&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;org.springframework.jdbc.datasource.DataSourceTransactionManager&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;dataSource&quot;</span> <span class="hljs-attr">ref</span>=<span class="hljs-string">&quot;dataSource&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">property</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span><br><span class="hljs-comment">&lt;!--事务增强配置--&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">tx:advice</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;txAdvice&quot;</span> <span class="hljs-attr">transaction-manager</span>=<span class="hljs-string">&quot;transactionManager&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">tx:attributes</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">tx:method</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;*&quot;</span>/&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">tx:attributes</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">tx:advice</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>③配置事务 AOP 织入</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!--事务的aop增强--&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">aop:config</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">aop:pointcut</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;myPointcut&quot;</span> <span class="hljs-attr">expression</span>=<span class="hljs-string">&quot;execution(* com.itheima.service.impl.*.*(..))&quot;</span>/&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">aop:advisor</span> <span class="hljs-attr">advice-ref</span>=<span class="hljs-string">&quot;txAdvice&quot;</span> <span class="hljs-attr">pointcut-ref</span>=<span class="hljs-string">&quot;myPointcut&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">aop:advisor</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">aop:config</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>④测试事务控制转账业务代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Override</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">transfer</span><span class="hljs-params">(String outMan, String inMan, <span class="hljs-keyword">double</span> money)</span> </span>&#123;<br>    accountDao.out(outMan,money);<br>    <span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>/<span class="hljs-number">0</span>;<br>    accountDao.in(inMan,money);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+
+
+<h4 id="6-2-3-切点方法的事务参数的配置"><a href="#6-2-3-切点方法的事务参数的配置" class="headerlink" title="6.2.3 切点方法的事务参数的配置"></a>6.2.3 切点方法的事务参数的配置</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!--事务增强配置--&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">tx:advice</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;txAdvice&quot;</span> <span class="hljs-attr">transaction-manager</span>=<span class="hljs-string">&quot;transactionManager&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">tx:attributes</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">tx:method</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;*&quot;</span>/&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">tx:attributes</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">tx:advice</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>其中，&lt; tx:method &gt; 代表切点方法的事务参数的配置，例如：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">tx:method</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;transfer&quot;</span> <span class="hljs-attr">isolation</span>=<span class="hljs-string">&quot;REPEATABLE_READ&quot;</span> <span class="hljs-attr">propagation</span>=<span class="hljs-string">&quot;REQUIRED&quot;</span> <span class="hljs-attr">timeout</span>=<span class="hljs-string">&quot;-1&quot;</span> <span class="hljs-attr">read-only</span>=<span class="hljs-string">&quot;false&quot;</span>/&gt;</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><p>name：切点方法名称</p>
+</li>
+<li><p>isolation：事务的隔离级别</p>
+</li>
+<li><p>propogation：事务的传播行为</p>
+</li>
+<li><p>timeout：超时时间</p>
+</li>
+<li><p>read-only：是否只读</p>
+</li>
+</ul>
+<h4 id="6-2-4-要点总结"><a href="#6-2-4-要点总结" class="headerlink" title="6.2.4 要点总结"></a>6.2.4 要点总结</h4><p>声明式事务控制的配置要点</p>
+<ul>
+<li><p>平台事务管理器配置</p>
+</li>
+<li><p>事务通知的配置</p>
+</li>
+<li><p>事务aop织入的配置</p>
+</li>
+</ul>
+<h3 id="6-3-基于注解的声明式事务控制"><a href="#6-3-基于注解的声明式事务控制" class="headerlink" title="6.3 基于注解的声明式事务控制"></a>6.3 基于注解的声明式事务控制</h3><h4 id="6-3-1-使用注解配置声明式事务控制"><a href="#6-3-1-使用注解配置声明式事务控制" class="headerlink" title="6.3.1 使用注解配置声明式事务控制"></a>6.3.1 使用注解配置声明式事务控制</h4><p>准备工作：</p>
+<p>编写 AccountDao 和 AccountService</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Repository(&quot;accountDao&quot;)</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AccountDaoImpl</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">AccountDao</span> </span>&#123;<br>    <span class="hljs-meta">@Autowired</span><br>    <span class="hljs-keyword">private</span> JdbcTemplate jdbcTemplate;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">out</span><span class="hljs-params">(String outMan, <span class="hljs-keyword">double</span> money)</span> </span>&#123;<br>        jdbcTemplate.update(<span class="hljs-string">&quot;update account set money=money-? where name=?&quot;</span>,money,outMan);<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">in</span><span class="hljs-params">(String inMan, <span class="hljs-keyword">double</span> money)</span> </span>&#123;<br>        jdbcTemplate.update(<span class="hljs-string">&quot;update account set money=money+? where name=?&quot;</span>,money,inMan);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Service(&quot;accountService&quot;)</span><br><span class="hljs-meta">@Transactional</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AccountServiceImpl</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">AccountService</span> </span>&#123;<br>    <span class="hljs-meta">@Autowired</span><br>    <span class="hljs-keyword">private</span> AccountDao accountDao;<br>    <span class="hljs-meta">@Transactional(isolation = Isolation.READ_COMMITTED,propagation = Propagation.REQUIRED)</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">transfer</span><span class="hljs-params">(String outMan, String inMan, <span class="hljs-keyword">double</span> money)</span> </span>&#123;<br>        accountDao.out(outMan,money);<br>        <span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>/<span class="hljs-number">0</span>;<br>        accountDao.in(inMan,money);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>编写 applicationContext.xml 配置文件</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!-- 之前省略datsSource、jdbcTemplate、平台事务管理器的配置--&gt;</span><br><span class="hljs-comment">&lt;!--组件扫描--&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">context:component-scan</span> <span class="hljs-attr">base-package</span>=<span class="hljs-string">&quot;com.itheima&quot;</span>/&gt;</span><br><span class="hljs-comment">&lt;!--事务的注解驱动--&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">tx:annotation-driven</span> <span class="hljs-attr">transaction-manager</span>=<span class="hljs-string">&quot;transactionManager&quot;</span>/&gt;</span><br></code></pre></td></tr></table></figure>
+
+
+
+<h4 id="6-3-2-注解配置声明式事务控制解析"><a href="#6-3-2-注解配置声明式事务控制解析" class="headerlink" title="6.3.2 注解配置声明式事务控制解析"></a>6.3.2 注解配置声明式事务控制解析</h4><p>①使用 @Transactional 在需要进行事务控制的类或是方法上修饰，注解可用的属性同 xml 配置方式，例如隔离级别、传播行为等。</p>
+<p>②注解使用在类上，那么该类下的所有方法都使用同一套注解参数配置。</p>
+<p>③使用在方法上，不同的方法可以采用不同的事务参数配置。</p>
+<p>④Xml配置文件中要开启事务的注解驱动&lt; tx:annotation-driven /&gt;</p>
+<h4 id="6-3-3-要点总结"><a href="#6-3-3-要点总结" class="headerlink" title="6.3.3 要点总结"></a>6.3.3 要点总结</h4><p>注解声明式事务控制的配置要点</p>
+<ul>
+<li><p>平台事务管理器配置（xml方式）</p>
+</li>
+<li><p>事务通知的配置（@Transactional注解配置）</p>
+</li>
+<li><p>事务注解驱动的配置 &lt; tx:annotation-driven /&gt;</p>
+</li>
+</ul>
+<h2 id="7-Mybatis"><a href="#7-Mybatis" class="headerlink" title="7. Mybatis"></a>7. Mybatis</h2><h2 id="实战练习："><a href="#实战练习：" class="headerlink" title="实战练习："></a>实战练习：</h2><ul>
 <li>第一阶段的spring练习：巩固 2 - 3.4 以及 4 的知识实战 —— 视频 <a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1WZ4y1P7Bp?p=89&t=307">p89 - p106</a></li>
 <li>第二阶段的spring练习：巩固 3.5 的知识实践 —— 视频 <a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1WZ4y1P7Bp?p=112">p112- p115</a></li>
 </ul>
