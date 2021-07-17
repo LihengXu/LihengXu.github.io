@@ -325,7 +325,16 @@
 <li>1.8以前会导致<strong>永久代</strong>内存溢出</li>
 <li>1.8以后会导致<strong>元空间</strong>内存溢出</li>
 </ul>
-<h4 id="常量池"><a href="#常量池" class="headerlink" title="常量池"></a>常量池</h4><p>二进制字节码的组成：类的基本信息、常量池、类的方法定义（包含了虚拟机指令）</p>
+<h4 id="常量池"><a href="#常量池" class="headerlink" title="常量池"></a>常量池</h4><blockquote>
+<p>在学习 JVM 中总是被几个常量池的关系搞晕，这里一篇比较好的<a target="_blank" rel="noopener" href="http://tangxman.github.io/2015/07/27/the-difference-of-java-string-pool/">文章</a>有总结几种常量池的关系</p>
+<p>Java 中几种常量池的区分:</p>
+<ul>
+<li>全局字符常量池（串池）</li>
+<li>class文件常量池</li>
+<li>运行时常量池</li>
+</ul>
+</blockquote>
+<p>二进制字节码的组成：类的基本信息、常量池、类的方法定义（包含了虚拟机指令）</p>
 <p><strong>通过反编译来查看类的信息</strong></p>
 <ul>
 <li><p>获得对应类的.class文件</p>
