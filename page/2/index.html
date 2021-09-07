@@ -194,6 +194,133 @@
     
     
       <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2021/04/01/MySQL_Join%E4%BC%98%E5%8C%96/" target="_self">
+          <img src="/img/blog/MySQL.png" srcset="/img/loading.gif" alt="MySQL_Join优化">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/04/01/MySQL_Join%E4%BC%98%E5%8C%96/">MySQL_Join优化</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/04/01/MySQL_Join%E4%BC%98%E5%8C%96/">
+          
+          
+            
+          
+          MySQL_Join优化1. Simple Nested-Loop Join
+
+r为驱动表，s为匹配表，可以看到从r中分别取出每一个记录区匹配s表的列，然后合并数据，对s表进行r表的行数次访问，对数据库开箱比较大
+
+建议小表驱动大表
+
+
+2. Index Nested-Loop Join
+
+这个要求非驱动表（s）上有索引，可以通过索引来减少比较，加速查询。
+
+在查询时，驱动表（r）会根据关联字段的
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-04-01 20:05" pubdate>
+              2021-04-01
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/Database/">Database</a>
+            
+              <a href="/categories/Database/MySQL/">MySQL</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/MySQL/">MySQL</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2021/04/01/MySQL_MVCC%E6%9C%BA%E5%88%B6%E5%92%8C%E9%94%81/" target="_self">
+          <img src="/img/blog/MySQL.png" srcset="/img/loading.gif" alt="MySQL的MVCC机制和锁">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/04/01/MySQL_MVCC%E6%9C%BA%E5%88%B6%E5%92%8C%E9%94%81/">MySQL的MVCC机制和锁</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/04/01/MySQL_MVCC%E6%9C%BA%E5%88%B6%E5%92%8C%E9%94%81/">
+          
+          
+            
+          
+          MVCC机制和锁1. 当前读和快照读MySQL的InnoDB存储引擎默认事务隔离级别是RR(可重复读), 是通过 “行排他锁+MVCC” 一起实现的, 不仅可以保证可重复读, 还可以部分防止幻读, 而非完全防止。为什么是部分防止幻读, 而不是完全防止?
+
+效果: 在如果事务B在事务A执行中, insert了一条数据并提交, 事务A再次查询, 虽然读取的是undo中的旧版本数据(防止了部分幻读), 
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-04-01 17:24" pubdate>
+              2021-04-01
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/Database/">Database</a>
+            
+              <a href="/categories/Database/MySQL/">MySQL</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/MySQL/">MySQL</a>
+            
+              <a href="/tags/MVCC/">MVCC</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2021/04/01/Redis%E7%BC%93%E5%AD%98%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8F%8C%E5%86%99%E4%B8%8D%E4%B8%80%E8%87%B4/" target="_self">
           <img src="/img/blog/Redis.png" srcset="/img/loading.gif" alt="Redis缓存数据库双写不一致">
         </a>
@@ -721,152 +848,11 @@ me
     </article>
   </div>
 
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2021/03/26/%E9%9D%A2%E8%AF%95%E5%A4%8D%E7%9B%98%EF%BC%9A%E8%85%BE%E8%AE%AF%E5%A4%A9%E7%BE%8E%E4%B8%80%E9%9D%A2/" target="_self">
-          <img src="/img/blog/Interview.png" srcset="/img/loading.gif" alt="腾讯天美开发实习一面">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/03/26/%E9%9D%A2%E8%AF%95%E5%A4%8D%E7%9B%98%EF%BC%9A%E8%85%BE%E8%AE%AF%E5%A4%A9%E7%BE%8E%E4%B8%80%E9%9D%A2/">腾讯天美开发实习一面</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/03/26/%E9%9D%A2%E8%AF%95%E5%A4%8D%E7%9B%98%EF%BC%9A%E8%85%BE%E8%AE%AF%E5%A4%A9%E7%BE%8E%E4%B8%80%E9%9D%A2/">
-          
-          
-            
-          
-          腾讯天美实习一面自我介绍
-项目介绍
-你会C++么，会一些脚本语言么？
-1.多线程和多进程的区别？“进程是资源分配的最小单位，线程是CPU调度的最小单位”，具体看 http://blog.csdn.net/bing_bing/article/details/8093552
-
-
-
-维度
-多进程
-多线程
-总结
-
-
-
-数据共享、同步
-数据是分开的:共享复杂，需要用IPC;同步简单
-多线程共享进程数据：共享
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-03-26 14:38" pubdate>
-              2021-03-26
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/Interview/">Interview</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Interview/">Interview</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2021/03/23/%E8%AE%A1%E7%BD%91/" target="_self">
-          <img src="/img/blog/Network.png" srcset="/img/loading.gif" alt="计算机网络总结">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/03/23/%E8%AE%A1%E7%BD%91/">计算机网络总结</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/03/23/%E8%AE%A1%E7%BD%91/">
-          
-          
-            
-          
-          计算机网络总结本复习总结完全参考教研室师姐（橘子姐）的笔记和JavaGuide总结[1][2]以及少量的补充
-1. OSI与TCP/IP各层的结构与功能,都有哪些协议?
-1.1 应用层1.1.1 应用层
-应用层：直接为用户的应用进程提供网络服务。
-
-应用层协议： 对于不同的网络应用需要不同的应用层协议。通俗的来讲就是应用层会借助TCP、UDP协议在各种各样的程序之间传递数据（邮件、文件等等）这时候
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-03-23 15:17" pubdate>
-              2021-03-23
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/CS/">CS</a>
-            
-              <a href="/categories/CS/Network/">Network</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/CS/">CS</a>
-            
-              <a href="/tags/Network/">Network</a>
-            
-              <a href="/tags/HTTP/">HTTP</a>
-            
-              <a href="/tags/HTTPS/">HTTPS</a>
-            
-              <a href="/tags/TCP/">TCP</a>
-            
-              <a href="/tags/UDP/">UDP</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
 
 
   <nav aria-label="navigation">
     <span class="pagination" id="pagination">
-      <a class="extend prev" rel="prev" href="/"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/#board">3</a><a class="extend next" rel="next" href="/page/3/#board"><i class="iconfont icon-arrowright"></i></a>
+      <a class="extend prev" rel="prev" href="/"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/#board">3</a><a class="page-number" href="/page/4/#board">4</a><a class="extend next" rel="next" href="/page/3/#board"><i class="iconfont icon-arrowright"></i></a>
     </span>
   </nav>
 
